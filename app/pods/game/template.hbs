@@ -1,1 +1,15 @@
-{{outlet}}
+<h1>TEST</h1>
+{{model.createdAt}}
+
+{{#each model.boards as |board|}}
+  {{board.name}}
+  {{#each board.players as |player|}}
+    {{player.isWhite}}
+    {{#each player.pieces as |piece|}}
+      {{piece.type}}
+    {{/each}}
+  {{/each}}
+  {{#each board.spots as |spot|}}
+    {{spot.name}}
+  {{/each}}
+{{/each}}

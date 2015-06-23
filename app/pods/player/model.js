@@ -1,12 +1,13 @@
-import Ember from "ember";
-import DS from 'ember-data';
+import DS from "ember-data";
 
 export default DS.Model.extend({
-  board: DS.belongsTo("board"),
-  moveHistory: DS.hasMany("move"),
+  board: DS.belongsTo("board", { async: true }),
+  pieces: DS.hasMany("piece", { async: true }),
 
-  name: DS.attr("string"),
-
-  isWhite: Ember.computed.equal("name", "board.playerWhite.name"),
-  isBlack: Ember.computed.equal("name", "board.playerBlack.name")
+  isWhite: function () {
+    return this === this.get("board.playerWhite");
+  }.property("board.playerWhite"),
+  isBlack: function () {
+    return this === this.get("board.playerBlack");
+  }.property("board.playerBlack")
 });
