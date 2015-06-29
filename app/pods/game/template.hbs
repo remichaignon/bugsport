@@ -2,14 +2,57 @@
 {{model.createdAt}}
 
 {{#each model.boards as |board|}}
-  {{board.name}}
+  <h5>BOARD = {{board.name}}</h5>
   {{#each board.players as |player|}}
-    {{player.isWhite}}
-    {{#each player.pieces as |piece|}}
-      {{piece.type}}
+    <p>Player {{#if player.isWhite}}white{{else}}black{{/if}}</p>
+    <div class="pieces">
+      <h5>Pieces</h5>
+      {{#each player.pieces as |piece|}}
+        <span>{{piece.type}}</span>
+      {{/each}}
+    </div>
+  {{/each}}
+  <div class="spots">
+    <h5>Spots</h5>
+    <div>
+    {{#each board.spotsOnRow8 as |spot|}}
+      <span>|{{spot.name}}|</span>
     {{/each}}
-  {{/each}}
-  {{#each board.spots as |spot|}}
-    {{spot.name}}
-  {{/each}}
+    </div>
+    <div>
+    {{#each board.spotsOnRow7 as |spot|}}
+      <span>|{{spot.name}}|</span>
+    {{/each}}
+    </div>
+    <div>
+    {{#each board.spotsOnRow6 as |spot|}}
+      <span>|{{spot.name}}|</span>
+    {{/each}}
+    </div>
+    <div>
+    {{#each board.spotsOnRow5 as |spot|}}
+      <span>|{{spot.name}}|</span>
+    {{/each}}
+    </div>
+    <div>
+    {{#each board.spotsOnRow4 as |spot|}}
+      <span>|{{spot.name}}|</span>
+    {{/each}}
+    </div>
+    <div>
+    {{#each board.spotsOnRow3 as |spot|}}
+      <span>|{{spot.name}}|</span>
+    {{/each}}
+    </div>
+    <div>
+    {{#each board.spotsOnRow2 as |spot|}}
+      <span>|{{spot.name}}|</span>
+    {{/each}}
+    </div>
+    <div>
+    {{#each board.spotsOnRow1 as |spot|}}
+      <span>|{{spot.name}}|</span>
+    {{/each}}
+    </div>
+  </div>
 {{/each}}
