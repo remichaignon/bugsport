@@ -1,10 +1,10 @@
-<h1>TEST</h1>
+<h1>BUGSPORT</h1>
 {{model.createdAt}}
 
 {{#each model.boards as |board|}}
-  <h5>BOARD = {{board.name}}</h5>
+  <h2>BOARD {{board.name}}</h2>
   {{#each board.players as |player|}}
-    <p>Player {{#if player.isWhite}}white{{else}}black{{/if}}</p>
+    <h3>Player {{#if player.isWhite}}white{{else}}black{{/if}}</h3>
     <div class="pieces">
       <h5>Pieces</h5>
       {{#each player.pieces as |piece|}}
