@@ -1,0 +1,14 @@
+import Ember from "ember";
+
+export default Ember.Component.extend({
+  spots: null,
+  row: null,
+
+  classNames: ["clearfix"],
+
+  spotsOnRow: function () {
+    return this.get("spots").filter(function (spot) {
+      return (spot.get("name") || [])[1] === this.get("row");
+    }.bind(this)).sortBy("name");
+  }.property("spots.@each.name", "row")
+});

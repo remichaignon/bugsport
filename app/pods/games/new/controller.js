@@ -105,5 +105,6 @@ export default Ember.Controller.extend({
     }
 
     return pieces;
-  }
+  },
+  _setPiecesOnBoard: function (store, board, playerWhite, playerBlack) {}
 });

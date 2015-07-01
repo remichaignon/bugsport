@@ -1,1 +1,15 @@
-{{yield}}
+{{#if model.isWhite}}
+  {{#if model.isKing}}&#9812;{{/if}}
+  {{#if model.isQueen}}&#9813;{{/if}}
+  {{#if model.isRook}}&#9814;{{/if}}
+  {{#if model.isBishop}}&#9815;{{/if}}
+  {{#if model.isKnight}}&#9816;{{/if}}
+  {{#if model.isPawn}}&#9817;{{/if}}
+{{else}}
+  {{#if model.isKing}}&#9818;{{/if}}
+  {{#if model.isQueen}}&#9819;{{/if}}
+  {{#if model.isRook}}&#9820;{{/if}}
+  {{#if model.isBishop}}&#9821;{{/if}}
+  {{#if model.isKnight}}&#9822;{{/if}}
+  {{#if model.isPawn}}&#9823;{{/if}}
+{{/if}}
