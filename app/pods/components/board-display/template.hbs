@@ -1,1 +1,26 @@
-{{yield}}
+<h2>BOARD {{model.name}}</h2>
+{{player-display model=model.playerBlack}}
+<div class="spots">
+  <h5>Spots</h5>
+  {{spot-row-display spots=model.spots row="8"}}
+  {{spot-row-display spots=model.spots row="7"}}
+  {{spot-row-display spots=model.spots row="6"}}
+  {{spot-row-display spots=model.spots row="5"}}
+  {{spot-row-display spots=model.spots row="4"}}
+  {{spot-row-display spots=model.spots row="3"}}
+  {{spot-row-display spots=model.spots row="2"}}
+  {{spot-row-display spots=model.spots row="1"}}
+  <div class="clearfix">
+    <span class="spot"></span>
+    <span class="spot">A</span>
+    <span class="spot">B</span>
+    <span class="spot">C</span>
+    <span class="spot">D</span>
+    <span class="spot">E</span>
+    <span class="spot">F</span>
+    <span class="spot">G</span>
+    <span class="spot">H</span>
+  </div>
+</div>
+<div style="clear: both;"></div>
+{{player-display model=model.playerWhite}}

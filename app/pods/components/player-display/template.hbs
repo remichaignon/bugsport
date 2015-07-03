@@ -1,0 +1,9 @@
+<h3>Player {{#if model.isWhite}}white{{else}}black{{/if}}</h3>
+<div class="pieces">
+  <h5>Pieces to drop:</h5>
+  {{#each spotlessPieces as |piece|}}
+    {{piece-display model=piece}}
+  {{else}}
+    None
+  {{/each}}
+</div>
