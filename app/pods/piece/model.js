@@ -16,6 +16,6 @@ export default DS.Model.extend({
   isQueen: Ember.computed.equal("type", "queen"),
   isKing: Ember.computed.equal("type", "king"),
 
-  isWhite: DS.attr("boolean"),
+  isWhite: Ember.computed.alias("player.isWhite"),
   isBlack: Ember.computed.not("isWhite")
 });

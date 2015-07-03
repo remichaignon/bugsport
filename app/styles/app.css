@@ -37,7 +37,18 @@
 .spot {
   float: left;
   width: 50px;
+  max-width: 50px;
   height: 50px;
+  max-height: 50px;
+
+  font-size: 40px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.label {
+  color: #888;
+  font-size: 20px;
 }
 
 .black {
