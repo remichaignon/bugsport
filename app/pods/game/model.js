@@ -3,8 +3,12 @@ import DS from "ember-data";
 
 export default DS.Model.extend({
   boards: DS.hasMany("board", { async: true }),
-  boardA: Ember.computed.alias("boards.firstObject"),
-  boardB: Ember.computed.alias("boards.lastObject"),
+  boardA: function () {
+    return this.get("boards").findBy("name", "A");
+  }.property("boards.@each.name"),
+  boardB: function () {
+    return this.get("boards").findBy("name", "B");
+  }.property("boards.@each.name"),
 
   name: DS.attr("string"),
   createdAt: DS.attr("date"),

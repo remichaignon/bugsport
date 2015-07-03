@@ -1,6 +1,8 @@
-<h1>BUGSPORT</h1>
-{{model.createdAt}}
+<div class="content">
+  <p>Game: "{{model.id}}"</p>
+  <p>Created at: {{model.createdAt}}</p>
 
-{{#each model.boards as |board|}}
-  {{board-display model=board}}
-{{/each}}
+  {{#each model.boards as |board|}}
+    {{board-display model=board}}
+  {{/each}}
+</div>
