@@ -122,7 +122,7 @@ export default Ember.Controller.extend({
       pieces.push(store.createRecord("piece", { type: "knight", player: player, isWhite: player.get("isWhite") }).save());
       pieces.push(store.createRecord("piece", { type: "rook", player: player, isWhite: player.get("isWhite") }).save());
     }
-    for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
       pieces.push(store.createRecord("piece", { type: "pawn", player: player, isWhite: player.get("isWhite") }).save());
     }
 
@@ -178,11 +178,11 @@ export default Ember.Controller.extend({
     board.get("spots").findBy("name", "G8").set("piece", blackKnights.get("lastObject"));
     board.get("spots").findBy("name", "H8").set("piece", blackRooks.get("lastObject"));
 
-    var promises = []
+    var promises = [];
 
     board.get("spots").forEach(function (spot) {
       promises.push(spot.save());
-    })
+    });
 
     return promises;
   }

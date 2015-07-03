@@ -1,8 +1,3 @@
 <div class="content">
-  <p>Game: "{{model.id}}"</p>
-  <p>Created at: {{model.createdAt}}</p>
-
-  {{#each model.boards as |board|}}
-    {{board-display model=board}}
-  {{/each}}
+  {{game-display model=model}}
 </div>

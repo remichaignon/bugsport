@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
-moduleForComponent('game-form', 'Unit | Component | game form', {
+moduleForComponent('spots-display', 'Unit | Component | spots display', {
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar'],
   unit: true
