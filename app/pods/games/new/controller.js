@@ -1,4 +1,19 @@
-import Ember from 'ember';
+import Ember from "ember";
+
+// functions
+// createBoardsForGame
+// createSpotsForBoard
+// createPlayersForBoard
+// createPiecesForPlayer
+//
+// saveGame
+// saveBoards
+// savePlayers
+// setPiecesOnBoard
+// setPieceOnSpot
+//
+// getPiecesForPlayer
+// getBoardForPlayer
 
 export default Ember.Controller.extend({
   actions: {

@@ -7,5 +7,9 @@ export default Ember.Component.extend({
     return (this.get("pieces") || []).filter(function (piece) {
       return !piece.get("spot");
     });
-  }.property("model.pieces.@each.spot")
+  }.property("model.pieces.@each.spot"),
+
+  actions: {
+    move: function (model) { this.sendAction("move", model); }
+  }
 });

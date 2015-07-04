@@ -2,5 +2,5 @@
 <p>Created at: {{model.createdAt}}</p>
 
 {{#each model.boards as |board|}}
-  {{board-display model=board}}
+  {{board-display model=board move="move"}}
 {{/each}}
