@@ -1,23 +1,127 @@
 import Ember from "ember";
 
-// functions
-// createBoardsForGame
-// createSpotsForBoard
-// createPlayersForBoard
-// createPiecesForPlayer
-//
-// saveGame
-// saveBoards
-// savePlayers
-// setPiecesOnBoard
-// setPieceOnSpot
-//
-// getPiecesForPlayer
-// getBoardForPlayer
-
 export default Ember.Controller.extend({
   actions: {
     save: function () {
+      // var game = this.get("model");
+      //
+      // var boardA = this.store.createRecord("board", { name: "A", game: game });
+      // var boardB = this.store.createRecord("board", { name: "B", game: game });
+      //
+      // var boardAPlayerWhite = this.store.createRecord("player", { board: boardA });
+      // var boardAPlayerBlack = this.store.createRecord("player", { board: boardA });
+      // var boardBPlayerWhite = this.store.createRecord("player", { board: boardB });
+      // var boardBPlayerBlack = this.store.createRecord("player", { board: boardB });
+      //
+      // var spots = [
+      //   "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1",
+      //   "A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2",
+      //   "A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3",
+      //   "A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4",
+      //   "A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5",
+      //   "A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6",
+      //   "A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7",
+      //   "A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"
+      // ];
+      //
+      // var boardASpots = spots.map(function (spot) {
+      //   return this.store.createRecord("spot", { name: spot, board: boardA });
+      // });
+      // var boardBSpots = spots.map(function (spot) {
+      //   return this.store.createRecord("spot", { name: spot, board: boardB });
+      // });
+      //
+      // var pieces = [
+      //   "rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook",
+      //   "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn"
+      // ];
+      //
+      // var boardAPlayerWhitePieces = pieces.map(function (piece) {
+      //   return this.store.createRecord("piece", { type: piece, player: boardAPlayerWhite });
+      // });
+      // var boardAPlayerBlackPieces = pieces.map(function (piece) {
+      //   return this.store.createRecord("piece", { type: piece, player: boardAPlayerBlack });
+      // });
+      // var boardBPlayerWhitePieces = pieces.map(function (piece) {
+      //   return this.store.createRecord("piece", { type: piece, player: boardBPlayerWhite });
+      // });
+      // var boardBPlayerBlackPieces = pieces.map(function (piece) {
+      //   return this.store.createRecord("piece", { type: piece, player: boardBPlayerBlack });
+      // });
+      //
+      // // Not a better way to set the board...
+      // boardAPlayerWhitePieces.forEach(function (piece) {
+      //   if (piece.get("isRook")) {
+      //     if (!boardASpots.findBy("name", "A1").get("piece")) {
+      //       boardASpots.findBy("name", "A1").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "H1").get("piece")) {
+      //       boardASpots.findBy("name", "H1").set("piece", piece);
+      //     }
+      //     throw new Error("Rook with no spot");
+      //   }
+      //   if (piece.get("isKnight")) {
+      //     if (!boardASpots.findBy("name", "B1").get("piece")) {
+      //       boardASpots.findBy("name", "B1").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "G1").get("piece")) {
+      //       boardASpots.findBy("name", "G1").set("piece", piece);
+      //     }
+      //     throw new Error("Knight with no spot");
+      //   }
+      //   if (piece.get("isBishop")) {
+      //     if (!boardASpots.findBy("name", "C1").get("piece")) {
+      //       boardASpots.findBy("name", "C1").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "F1").get("piece")) {
+      //       boardASpots.findBy("name", "F1").set("piece", piece);
+      //     }
+      //     throw new Error("Bishop with no spot");
+      //   }
+      //   if (piece.get("isQueen")) {
+      //     if (!boardASpots.findBy("name", "D1").get("piece")) {
+      //       boardASpots.findBy("name", "D1").set("piece", piece);
+      //     }
+      //     throw new Error("Queen with no spot");
+      //   }
+      //   if (piece.get("isKing")) {
+      //     if (!boardASpots.findBy("name", "E1").get("piece")) {
+      //       boardASpots.findBy("name", "E1").set("piece", piece);
+      //     }
+      //     throw new Error("King with no spot");
+      //   }
+      //   if (piece.get("isPawn")) {
+      //     if (!boardASpots.findBy("name", "A2").get("piece")) {
+      //       boardASpots.findBy("name", "A2").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "B2").get("piece")) {
+      //       boardASpots.findBy("name", "B2").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "C2").get("piece")) {
+      //       boardASpots.findBy("name", "C2").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "D2").get("piece")) {
+      //       boardASpots.findBy("name", "D2").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "E2").get("piece")) {
+      //       boardASpots.findBy("name", "E2").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "F2").get("piece")) {
+      //       boardASpots.findBy("name", "F2").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "G2").get("piece")) {
+      //       boardASpots.findBy("name", "G2").set("piece", piece);
+      //     }
+      //     if (!boardASpots.findBy("name", "H2").get("piece")) {
+      //       boardASpots.findBy("name", "H2").set("piece", piece);
+      //     }
+      //     throw new Error("Pawn with no spot");
+      //   }
+      // });
+
+      // save all
+      // get all
+
       this.get("model").save()
         .then(function (game) {
           var boards = this._createBoardsForGame(this.store, game);
