@@ -3,306 +3,146 @@ import Ember from "ember";
 export default Ember.Controller.extend({
   actions: {
     save: function () {
-      // var game = this.get("model");
-      //
-      // var boardA = this.store.createRecord("board", { name: "A", game: game });
-      // var boardB = this.store.createRecord("board", { name: "B", game: game });
-      //
-      // var boardAPlayerWhite = this.store.createRecord("player", { board: boardA });
-      // var boardAPlayerBlack = this.store.createRecord("player", { board: boardA });
-      // var boardBPlayerWhite = this.store.createRecord("player", { board: boardB });
-      // var boardBPlayerBlack = this.store.createRecord("player", { board: boardB });
-      //
-      // var spots = [
-      //   "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1",
-      //   "A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2",
-      //   "A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3",
-      //   "A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4",
-      //   "A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5",
-      //   "A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6",
-      //   "A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7",
-      //   "A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"
-      // ];
-      //
-      // var boardASpots = spots.map(function (spot) {
-      //   return this.store.createRecord("spot", { name: spot, board: boardA });
-      // });
-      // var boardBSpots = spots.map(function (spot) {
-      //   return this.store.createRecord("spot", { name: spot, board: boardB });
-      // });
-      //
-      // var pieces = [
-      //   "rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook",
-      //   "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn"
-      // ];
-      //
-      // var boardAPlayerWhitePieces = pieces.map(function (piece) {
-      //   return this.store.createRecord("piece", { type: piece, player: boardAPlayerWhite });
-      // });
-      // var boardAPlayerBlackPieces = pieces.map(function (piece) {
-      //   return this.store.createRecord("piece", { type: piece, player: boardAPlayerBlack });
-      // });
-      // var boardBPlayerWhitePieces = pieces.map(function (piece) {
-      //   return this.store.createRecord("piece", { type: piece, player: boardBPlayerWhite });
-      // });
-      // var boardBPlayerBlackPieces = pieces.map(function (piece) {
-      //   return this.store.createRecord("piece", { type: piece, player: boardBPlayerBlack });
-      // });
-      //
-      // // Not a better way to set the board...
-      // boardAPlayerWhitePieces.forEach(function (piece) {
-      //   if (piece.get("isRook")) {
-      //     if (!boardASpots.findBy("name", "A1").get("piece")) {
-      //       boardASpots.findBy("name", "A1").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "H1").get("piece")) {
-      //       boardASpots.findBy("name", "H1").set("piece", piece);
-      //     }
-      //     throw new Error("Rook with no spot");
-      //   }
-      //   if (piece.get("isKnight")) {
-      //     if (!boardASpots.findBy("name", "B1").get("piece")) {
-      //       boardASpots.findBy("name", "B1").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "G1").get("piece")) {
-      //       boardASpots.findBy("name", "G1").set("piece", piece);
-      //     }
-      //     throw new Error("Knight with no spot");
-      //   }
-      //   if (piece.get("isBishop")) {
-      //     if (!boardASpots.findBy("name", "C1").get("piece")) {
-      //       boardASpots.findBy("name", "C1").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "F1").get("piece")) {
-      //       boardASpots.findBy("name", "F1").set("piece", piece);
-      //     }
-      //     throw new Error("Bishop with no spot");
-      //   }
-      //   if (piece.get("isQueen")) {
-      //     if (!boardASpots.findBy("name", "D1").get("piece")) {
-      //       boardASpots.findBy("name", "D1").set("piece", piece);
-      //     }
-      //     throw new Error("Queen with no spot");
-      //   }
-      //   if (piece.get("isKing")) {
-      //     if (!boardASpots.findBy("name", "E1").get("piece")) {
-      //       boardASpots.findBy("name", "E1").set("piece", piece);
-      //     }
-      //     throw new Error("King with no spot");
-      //   }
-      //   if (piece.get("isPawn")) {
-      //     if (!boardASpots.findBy("name", "A2").get("piece")) {
-      //       boardASpots.findBy("name", "A2").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "B2").get("piece")) {
-      //       boardASpots.findBy("name", "B2").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "C2").get("piece")) {
-      //       boardASpots.findBy("name", "C2").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "D2").get("piece")) {
-      //       boardASpots.findBy("name", "D2").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "E2").get("piece")) {
-      //       boardASpots.findBy("name", "E2").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "F2").get("piece")) {
-      //       boardASpots.findBy("name", "F2").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "G2").get("piece")) {
-      //       boardASpots.findBy("name", "G2").set("piece", piece);
-      //     }
-      //     if (!boardASpots.findBy("name", "H2").get("piece")) {
-      //       boardASpots.findBy("name", "H2").set("piece", piece);
-      //     }
-      //     throw new Error("Pawn with no spot");
-      //   }
-      // });
+      debugger;
+      var game = this.get("model");
 
-      // save all
-      // get all
+      var boardA = this.store.createRecord("board", { name: "A", game: game });
+      var boardB = this.store.createRecord("board", { name: "B", game: game });
+      game.get("board");
 
-      this.get("model").save()
-        .then(function (game) {
-          var boards = this._createBoardsForGame(this.store, game);
+      var boardAPlayerWhite = this.store.createRecord("player", { board: boardA });
+      var boardAPlayerBlack = this.store.createRecord("player", { board: boardA });
+      var boardBPlayerWhite = this.store.createRecord("player", { board: boardB });
+      var boardBPlayerBlack = this.store.createRecord("player", { board: boardB });
+      boardA.get("players");
+      boardB.get("players");
 
-          return Ember.RSVP.hashSettled({
-            game: game,
-            boardA: boards[0],
-            boardB: boards[1]
+      var spots = [
+        "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1",
+        "A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2",
+        "A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3",
+        "A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4",
+        "A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5",
+        "A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6",
+        "A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7",
+        "A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"
+      ];
+
+      var boardASpots = spots.map(function (spot) {
+        return this.store.createRecord("spot", { name: spot, board: boardA });
+      }.bind(this));
+      var boardBSpots = spots.map(function (spot) {
+        return this.store.createRecord("spot", { name: spot, board: boardB });
+      }.bind(this));
+      boardA.get("spots");
+      boardB.get("spots");
+
+      var pieces = [
+        "rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook",
+        "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn"
+      ];
+
+      var boardAPlayerWhitePieces = pieces.map(function (piece) {
+        return this.store.createRecord("piece", { type: piece, player: boardAPlayerWhite });
+      }.bind(this));
+      var boardAPlayerBlackPieces = pieces.map(function (piece) {
+        return this.store.createRecord("piece", { type: piece, player: boardAPlayerBlack });
+      }.bind(this));
+      var boardBPlayerWhitePieces = pieces.map(function (piece) {
+        return this.store.createRecord("piece", { type: piece, player: boardBPlayerWhite });
+      }.bind(this));
+      var boardBPlayerBlackPieces = pieces.map(function (piece) {
+        return this.store.createRecord("piece", { type: piece, player: boardBPlayerBlack });
+      }.bind(this));
+      boardAPlayerWhite.get("pieces");
+      boardAPlayerBlack.get("pieces");
+      boardBPlayerWhite.get("pieces");
+      boardBPlayerBlack.get("pieces");
+
+      var setPieceOnBoard = function (board) {
+        var playerWhite = board.get("playerWhite"),
+            playerBlack = board.get("playerBlack"),
+            blackPawns = playerBlack.get("pieces").filterBy("type", "pawn"),
+            blackKnights = playerBlack.get("pieces").filterBy("type", "knight"),
+            blackBishops = playerBlack.get("pieces").filterBy("type", "bishop"),
+            blackRooks = playerBlack.get("pieces").filterBy("type", "rook"),
+            blackQueen = playerBlack.get("pieces").findBy("type", "queen"),
+            blackKing = playerBlack.get("pieces").findBy("type", "king"),
+            whitePawns = playerWhite.get("pieces").filterBy("type", "pawn"),
+            whiteKnights = playerWhite.get("pieces").filterBy("type", "knight"),
+            whiteBishops = playerWhite.get("pieces").filterBy("type", "bishop"),
+            whiteRooks = playerWhite.get("pieces").filterBy("type", "rook"),
+            whiteQueen = playerWhite.get("pieces").findBy("type", "queen"),
+            whiteKing = playerWhite.get("pieces").findBy("type", "king");
+
+        board.get("spots").findBy("name", "A1").set("piece", whiteRooks.get("firstObject"));
+        board.get("spots").findBy("name", "B1").set("piece", whiteKnights.get("firstObject"));
+        board.get("spots").findBy("name", "C1").set("piece", whiteBishops.get("firstObject"));
+        board.get("spots").findBy("name", "D1").set("piece", whiteQueen);
+        board.get("spots").findBy("name", "E1").set("piece", whiteKing);
+        board.get("spots").findBy("name", "F1").set("piece", whiteBishops.get("lastObject"));
+        board.get("spots").findBy("name", "G1").set("piece", whiteKnights.get("lastObject"));
+        board.get("spots").findBy("name", "H1").set("piece", whiteRooks.get("lastObject"));
+
+        board.get("spots")
+          .filter(function (spot) {
+            return spot.get("name")[1] === "2";
+          })
+          .map(function (spot, index) {
+            spot.set("piece", whitePawns[index]);
           });
-        }.bind(this))
-        .then(function (hash) {
-          return Ember.RSVP.hashSettled({
-            game: hash.game.value.save(),
-            boardA: hash.boardA.value,
-            boardB: hash.boardB.value,
-            boardASpots: this._createSpotsForBoard(this.store, hash.boardA.value),
-            boardBSpots: this._createSpotsForBoard(this.store, hash.boardB.value),
-            boardAPlayers: this._createPlayersForBoard(this.store, hash.boardA.value),
-            boardBPlayers: this._createPlayersForBoard(this.store, hash.boardB.value)
-          });
-        }.bind(this))
-        .then(function (hash) {
-          var boardAPlayerWhite = hash.boardAPlayers.value[0],
-              boardAPlayerBlack = hash.boardAPlayers.value[1],
-              boardBPlayerWhite = hash.boardBPlayers.value[0],
-              boardBPlayerBlack = hash.boardBPlayers.value[1];
 
-          return Ember.RSVP.allSettled(
-            [].concat(
-              hash.boardA.value.save(),
-              hash.boardB.value.save(),
-              boardAPlayerWhite,
-              boardAPlayerBlack,
-              boardBPlayerWhite,
-              boardBPlayerBlack,
-              this._createPiecesForPlayer(this.store, boardAPlayerWhite),
-              this._createPiecesForPlayer(this.store, boardAPlayerBlack),
-              this._createPiecesForPlayer(this.store, boardBPlayerWhite),
-              this._createPiecesForPlayer(this.store, boardBPlayerBlack)
-            )
-          );
-        }.bind(this))
+        board.get("spots")
+          .filter(function (spot) {
+            return spot.get("name")[1] === "7";
+          })
+          .map(function (spot, index) {
+            spot.set("piece", blackPawns[index]);
+          });
+
+        board.get("spots").findBy("name", "A8").set("piece", blackRooks.get("firstObject"));
+        board.get("spots").findBy("name", "B8").set("piece", blackKnights.get("firstObject"));
+        board.get("spots").findBy("name", "C8").set("piece", blackBishops.get("firstObject"));
+        board.get("spots").findBy("name", "D8").set("piece", blackQueen);
+        board.get("spots").findBy("name", "E8").set("piece", blackKing);
+        board.get("spots").findBy("name", "F8").set("piece", blackBishops.get("lastObject"));
+        board.get("spots").findBy("name", "G8").set("piece", blackKnights.get("lastObject"));
+        board.get("spots").findBy("name", "H8").set("piece", blackRooks.get("lastObject"));
+      };
+
+      setPieceOnBoard(boardA);
+      setPieceOnBoard(boardB);
+
+      boardAPlayerWhitePieces.map(function (piece) { piece.get("spot"); });
+      boardAPlayerBlackPieces.map(function (piece) { piece.get("spot"); });
+      boardBPlayerWhitePieces.map(function (piece) { piece.get("spot"); });
+      boardBPlayerBlackPieces.map(function (piece) { piece.get("spot"); });
+
+      var promises = [].concat(
+        game.save(),
+        boardA.save(),
+        boardB.save(),
+        boardAPlayerWhite.save(),
+        boardAPlayerBlack.save(),
+        boardBPlayerWhite.save(),
+        boardBPlayerBlack.save(),
+        boardASpots.map(function (spot) { return spot.save(); }),
+        boardBSpots.map(function (spot) { return spot.save(); }),
+        boardAPlayerWhitePieces.map(function (piece) { return piece.save(); }),
+        boardAPlayerBlackPieces.map(function (piece) { return piece.save(); }),
+        boardBPlayerWhitePieces.map(function (piece) { return piece.save(); }),
+        boardBPlayerBlackPieces.map(function (piece) { return piece.save(); })
+      );
+
+      Ember.RSVP
+        .allSettled(promises)
         .then(function (all) {
-          return Ember.RSVP.allSettled([
-            all[2].value.save(),
-            all[3].value.save(),
-            all[4].value.save(),
-            all[5].value.save()
-          ]);
-        }.bind(this))
-        .then(function (playerArray) {
-          return Ember.RSVP.allSettled([
-            playerArray[0].value,
-            playerArray[1].value,
-            playerArray[2].value,
-            playerArray[3].value,
-            playerArray[0].value.get("pieces"),
-            playerArray[1].value.get("pieces"),
-            playerArray[2].value.get("pieces"),
-            playerArray[3].value.get("pieces")
-          ]);
-        }.bind(this))
-        .then(function (playerArray) {
-          var boards = [
-            playerArray[0].value.get("board"),
-            playerArray[1].value.get("board"),
-            playerArray[2].value.get("board"),
-            playerArray[3].value.get("board")
-          ].uniq();
-
-          return Ember.RSVP.allSettled([].concat(
-            this._setPiecesOnBoard(boards.get("firstObject")),
-            this._setPiecesOnBoard(boards.get("lastObject"))
-          ));
-        }.bind(this))
-        .then(function (done) {
-          this.transitionToRoute("game", this.get("model"));
+          debugger;
+          this.transitionToRoute("game", game);
         }.bind(this))
         .catch(function (err) {
           debugger;
-        }.bind(this));
+        });
     }
-  },
-
-  _createBoardsForGame: function (store, game) {
-    return [
-      store.createRecord("board", { game: game, name: "A" }).save(),
-      store.createRecord("board", { game: game, name: "B" }).save()
-    ];
-  },
-  _createSpotsForBoard: function (store, board) {
-    var spots = [],
-        rows = ["1", "2", "3", "4", "5", "6", "7", "8"],
-        columns = ["A", "B", "C", "D", "E", "F", "G", "H"];
-
-    for (var i = 0; i < rows.length; i++) {
-      for (var j = 0; j < columns.length; j++) {
-        spots.push(this.store.createRecord("spot", { name: columns[j] + rows[i], board: board }).save());
-      }
-    }
-
-    return spots;
-  },
-  _createPlayersForBoard: function (store, board) {
-    return [
-      store.createRecord("player", { board: board }).save(),
-      store.createRecord("player", { board: board }).save()
-    ];
-  },
-  _createPiecesForPlayer: function (store, player) {
-    var pieces = [
-      store.createRecord("piece", { type: "king", player: player, isWhite: player.get("isWhite") }).save(),
-      store.createRecord("piece", { type: "queen", player: player, isWhite: player.get("isWhite") }).save()
-    ];
-    for (var i = 0; i < 2; i++) {
-      pieces.push(store.createRecord("piece", { type: "bishop", player: player, isWhite: player.get("isWhite") }).save());
-      pieces.push(store.createRecord("piece", { type: "knight", player: player, isWhite: player.get("isWhite") }).save());
-      pieces.push(store.createRecord("piece", { type: "rook", player: player, isWhite: player.get("isWhite") }).save());
-    }
-    for (var j = 0; j < 8; j++) {
-      pieces.push(store.createRecord("piece", { type: "pawn", player: player, isWhite: player.get("isWhite") }).save());
-    }
-
-    return pieces;
-  },
-  _setPiecesOnBoard: function (board) {
-    var playerWhite = board.get("playerWhite"),
-        playerBlack = board.get("playerBlack"),
-        blackPawns = playerBlack.get("pieces").filterBy("type", "pawn"),
-        blackKnights = playerBlack.get("pieces").filterBy("type", "knight"),
-        blackBishops = playerBlack.get("pieces").filterBy("type", "bishop"),
-        blackRooks = playerBlack.get("pieces").filterBy("type", "rook"),
-        blackQueen = playerBlack.get("pieces").findBy("type", "queen"),
-        blackKing = playerBlack.get("pieces").findBy("type", "king"),
-        whitePawns = playerWhite.get("pieces").filterBy("type", "pawn"),
-        whiteKnights = playerWhite.get("pieces").filterBy("type", "knight"),
-        whiteBishops = playerWhite.get("pieces").filterBy("type", "bishop"),
-        whiteRooks = playerWhite.get("pieces").filterBy("type", "rook"),
-        whiteQueen = playerWhite.get("pieces").findBy("type", "queen"),
-        whiteKing = playerWhite.get("pieces").findBy("type", "king");
-
-    board.get("spots").findBy("name", "A1").set("piece", whiteRooks.get("firstObject"));
-    board.get("spots").findBy("name", "B1").set("piece", whiteKnights.get("firstObject"));
-    board.get("spots").findBy("name", "C1").set("piece", whiteBishops.get("firstObject"));
-    board.get("spots").findBy("name", "D1").set("piece", whiteQueen);
-    board.get("spots").findBy("name", "E1").set("piece", whiteKing);
-    board.get("spots").findBy("name", "F1").set("piece", whiteBishops.get("lastObject"));
-    board.get("spots").findBy("name", "G1").set("piece", whiteKnights.get("lastObject"));
-    board.get("spots").findBy("name", "H1").set("piece", whiteRooks.get("lastObject"));
-
-    var whitePawnRow = board.get("spots").filter(function (spot) {
-      return spot.get("name")[1] === "2";
-    });
-
-    for (var i = 0; i < 8; i++) {
-      whitePawnRow[i].set("piece", whitePawns[i]);
-    }
-
-    var blackPawnRow = board.get("spots").filter(function (spot) {
-      return spot.get("name")[1] === "7";
-    });
-
-    for (var i = 0; i < 8; i++) {
-      blackPawnRow[i].set("piece", blackPawns[i]);
-    }
-
-    board.get("spots").findBy("name", "A8").set("piece", blackRooks.get("firstObject"));
-    board.get("spots").findBy("name", "B8").set("piece", blackKnights.get("firstObject"));
-    board.get("spots").findBy("name", "C8").set("piece", blackBishops.get("firstObject"));
-    board.get("spots").findBy("name", "D8").set("piece", blackQueen);
-    board.get("spots").findBy("name", "E8").set("piece", blackKing);
-    board.get("spots").findBy("name", "F8").set("piece", blackBishops.get("lastObject"));
-    board.get("spots").findBy("name", "G8").set("piece", blackKnights.get("lastObject"));
-    board.get("spots").findBy("name", "H8").set("piece", blackRooks.get("lastObject"));
-
-    var promises = [];
-
-    board.get("spots").forEach(function (spot) {
-      promises.push(spot.save());
-    });
-
-    return promises;
   }
 });
