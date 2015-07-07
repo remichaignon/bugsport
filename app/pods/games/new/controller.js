@@ -3,19 +3,15 @@ import Ember from "ember";
 export default Ember.Controller.extend({
   actions: {
     save: function () {
-      debugger;
       var game = this.get("model");
 
       var boardA = this.store.createRecord("board", { name: "A", game: game });
       var boardB = this.store.createRecord("board", { name: "B", game: game });
-      game.get("board");
 
       var boardAPlayerWhite = this.store.createRecord("player", { board: boardA });
       var boardAPlayerBlack = this.store.createRecord("player", { board: boardA });
       var boardBPlayerWhite = this.store.createRecord("player", { board: boardB });
       var boardBPlayerBlack = this.store.createRecord("player", { board: boardB });
-      boardA.get("players");
-      boardB.get("players");
 
       var spots = [
         "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1",
@@ -34,8 +30,6 @@ export default Ember.Controller.extend({
       var boardBSpots = spots.map(function (spot) {
         return this.store.createRecord("spot", { name: spot, board: boardB });
       }.bind(this));
-      boardA.get("spots");
-      boardB.get("spots");
 
       var pieces = [
         "rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook",
@@ -54,10 +48,6 @@ export default Ember.Controller.extend({
       var boardBPlayerBlackPieces = pieces.map(function (piece) {
         return this.store.createRecord("piece", { type: piece, player: boardBPlayerBlack });
       }.bind(this));
-      boardAPlayerWhite.get("pieces");
-      boardAPlayerBlack.get("pieces");
-      boardBPlayerWhite.get("pieces");
-      boardBPlayerBlack.get("pieces");
 
       var setPieceOnBoard = function (board) {
         var playerWhite = board.get("playerWhite"),
@@ -112,11 +102,6 @@ export default Ember.Controller.extend({
 
       setPieceOnBoard(boardA);
       setPieceOnBoard(boardB);
-
-      boardAPlayerWhitePieces.map(function (piece) { piece.get("spot"); });
-      boardAPlayerBlackPieces.map(function (piece) { piece.get("spot"); });
-      boardBPlayerWhitePieces.map(function (piece) { piece.get("spot"); });
-      boardBPlayerBlackPieces.map(function (piece) { piece.get("spot"); });
 
       var promises = [].concat(
         game.save(),

@@ -6,6 +6,6 @@ export default Ember.Component.extend({
   tagName: "span",
 
   onClick: function () {
-    this.sendAction("selectPiece", this.get("model"));
+    this.get("model").then(function (piece) { this.sendAction("selectPiece", piece); }.bind(this));
   }.on("click")
 });
