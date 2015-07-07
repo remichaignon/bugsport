@@ -13,6 +13,7 @@ export default Ember.Component.extend({
   }.property("spots.@each.name", "row"),
 
   actions: {
-    move: function (model) { this.sendAction("move", model); }
+    selectPiece: function (piece) { this.sendAction("selectPiece", piece); },
+    selectSpot: function (spot) { this.sendAction("selectSpot", spot); }
   }
 });

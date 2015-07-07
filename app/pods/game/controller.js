@@ -4,32 +4,17 @@ export default Ember.Controller.extend({
   pieceToMove: null,
 
   actions: {
-    move: function (pieceOrSpot) {
-      debugger;
-      if (!this.get("pieceToMove")) {
-        var piece = pieceOrSpot;
+    selectPiece: function (piece) {
+      this.set("pieceToMove", piece);
+    },
+    selectSpot: function (spot) {
+      if (!this.get("pieceToMove")) return;
+      if (this.get("pieceToMove.spot.id") === spot.get("id")) return;
 
-        if (pieceOrSpot.constructor.modelName === "spot") {
-          piece = pieceOrSpot.get("piece");
-        }
-
-        this.set("pieceToMove", piece);
-        return;
-      }
-
-      var spotToGetTo = pieceOrSpot;
-
-      if (pieceOrSpot.constructor.modelName === "piece") {
-        spotToGetTo = pieceOrSpot.get("spot");
-      }
-
-      if (this.get("pieceToMove.spot.id") === spotToGetTo.get("id")) {
-        return;
-      }
-
-      this.get("pieceToMove").set("spot", spotToGetTo);
-      // this.get("pieceToMove").save();
-      this.set("pieceToMove", null);
+      var piece = this.get("pieceToMove");
+      piece.set("spot", spot);
+      piece.save()
+        .then(function () { this.set("pieceToMove", null); }.bind(this));
     }
   }
 });

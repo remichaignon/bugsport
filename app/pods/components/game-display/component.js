@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   classNames: ["game"],
 
   actions: {
-    move: function (model) { this.sendAction("move", model); }
+    selectPiece: function (piece) { this.sendAction("selectPiece", piece); },
+    selectSpot: function (spot) { this.sendAction("selectSpot", spot); }
   }
 });

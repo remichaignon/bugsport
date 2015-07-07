@@ -2,5 +2,5 @@
 <p>Created at: {{model.createdAt}}</p>
 
 {{#each model.boards as |board|}}
-  {{board-display model=board move="move"}}
+  {{board-display model=board selectPiece="selectPiece" selectSpot="selectSpot"}}
 {{/each}}

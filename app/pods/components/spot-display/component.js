@@ -7,10 +7,10 @@ export default Ember.Component.extend({
   classNameBindings: ["model.isBlack:black:white"],
 
   onClick: function () {
-    this.sendAction("move", this.get("model"));
+    this.sendAction("selectSpot", this.get("model"));
   }.on("click"),
 
   actions: {
-    move: function (model) { this.sendAction("move", model); }
+    selectPiece: function (piece) { this.sendAction("selectPiece", piece); }
   }
 });
