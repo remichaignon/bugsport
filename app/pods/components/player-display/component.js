@@ -4,8 +4,8 @@ export default Ember.Component.extend({
   model: null,
 
   spotlessPieces: function () {
-    return (this.get("pieces") || []).filter(function (piece) {
-      return !piece.get("spot");
+    return (this.get("model.pieces") || []).filter(function (piece) {
+      return !piece.get("spot.id");
     });
   }.property("model.pieces.@each.spot"),
 
