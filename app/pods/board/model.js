@@ -8,6 +8,12 @@ export default DS.Model.extend({
 
   name: DS.attr("string"),
 
+  otherBoard: function () {
+    var name = (this.get("name") === "A") ? "B" : "A";
+
+    return this.get("game.board" + name);
+  }.property("game.boards.@each"),
+
   playerWhite: Ember.computed.alias("players.firstObject"),
   playerBlack: Ember.computed.alias("players.lastObject"),
 

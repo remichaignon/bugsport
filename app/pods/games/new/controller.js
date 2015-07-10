@@ -3,15 +3,13 @@ import Ember from "ember";
 export default Ember.Controller.extend({
   actions: {
     save: function () {
-      var game = this.get("model");
-
-      var boardA = this.store.createRecord("board", { name: "A", game: game });
-      var boardB = this.store.createRecord("board", { name: "B", game: game });
-
-      var boardAPlayerWhite = this.store.createRecord("player", { board: boardA });
-      var boardAPlayerBlack = this.store.createRecord("player", { board: boardA });
-      var boardBPlayerWhite = this.store.createRecord("player", { board: boardB });
-      var boardBPlayerBlack = this.store.createRecord("player", { board: boardB });
+      var game = this.get("model"),
+          boardA = this.store.createRecord("board", { name: "A", game: game }),
+          boardB = this.store.createRecord("board", { name: "B", game: game }),
+          boardAPlayerWhite = this.store.createRecord("player", { board: boardA }),
+          boardAPlayerBlack = this.store.createRecord("player", { board: boardA }),
+          boardBPlayerWhite = this.store.createRecord("player", { board: boardB }),
+          boardBPlayerBlack = this.store.createRecord("player", { board: boardB });
 
       var spots = [
         "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1",
@@ -25,11 +23,11 @@ export default Ember.Controller.extend({
       ];
 
       var boardASpots = spots.map(function (spot) {
-        return this.store.createRecord("spot", { name: spot, board: boardA });
-      }.bind(this));
-      var boardBSpots = spots.map(function (spot) {
-        return this.store.createRecord("spot", { name: spot, board: boardB });
-      }.bind(this));
+            return this.store.createRecord("spot", { name: spot, board: boardA });
+          }.bind(this)),
+          boardBSpots = spots.map(function (spot) {
+            return this.store.createRecord("spot", { name: spot, board: boardB });
+          }.bind(this));
 
       var pieces = [
         "rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook",
@@ -37,44 +35,45 @@ export default Ember.Controller.extend({
       ];
 
       var boardAPlayerWhitePieces = pieces.map(function (piece) {
-        return this.store.createRecord("piece", { type: piece, player: boardAPlayerWhite });
-      }.bind(this));
-      var boardAPlayerBlackPieces = pieces.map(function (piece) {
-        return this.store.createRecord("piece", { type: piece, player: boardAPlayerBlack });
-      }.bind(this));
-      var boardBPlayerWhitePieces = pieces.map(function (piece) {
-        return this.store.createRecord("piece", { type: piece, player: boardBPlayerWhite });
-      }.bind(this));
-      var boardBPlayerBlackPieces = pieces.map(function (piece) {
-        return this.store.createRecord("piece", { type: piece, player: boardBPlayerBlack });
-      }.bind(this));
+            return this.store.createRecord("piece", { type: piece, player: boardAPlayerWhite });
+          }.bind(this)),
+          boardAPlayerBlackPieces = pieces.map(function (piece) {
+            return this.store.createRecord("piece", { type: piece, player: boardAPlayerBlack });
+          }.bind(this)),
+          boardBPlayerWhitePieces = pieces.map(function (piece) {
+            return this.store.createRecord("piece", { type: piece, player: boardBPlayerWhite });
+          }.bind(this)),
+          boardBPlayerBlackPieces = pieces.map(function (piece) {
+            return this.store.createRecord("piece", { type: piece, player: boardBPlayerBlack });
+          }.bind(this));
 
       var setPieceOnBoard = function (board) {
-        var playerWhite = board.get("playerWhite"),
-            playerBlack = board.get("playerBlack"),
-            blackPawns = playerBlack.get("pieces").filterBy("type", "pawn"),
-            blackKnights = playerBlack.get("pieces").filterBy("type", "knight"),
-            blackBishops = playerBlack.get("pieces").filterBy("type", "bishop"),
-            blackRooks = playerBlack.get("pieces").filterBy("type", "rook"),
-            blackQueen = playerBlack.get("pieces").findBy("type", "queen"),
-            blackKing = playerBlack.get("pieces").findBy("type", "king"),
-            whitePawns = playerWhite.get("pieces").filterBy("type", "pawn"),
-            whiteKnights = playerWhite.get("pieces").filterBy("type", "knight"),
-            whiteBishops = playerWhite.get("pieces").filterBy("type", "bishop"),
-            whiteRooks = playerWhite.get("pieces").filterBy("type", "rook"),
-            whiteQueen = playerWhite.get("pieces").findBy("type", "queen"),
-            whiteKing = playerWhite.get("pieces").findBy("type", "king");
+        var spots = board.get("spots"),
+            playerWhitePieces = board.get("playerWhite.pieces"),
+            playerBlackPieces = board.get("playerBlack.pieces"),
+            whitePawns = playerWhitePieces.filterBy("type", "pawn"),
+            whiteKnights = playerWhitePieces.filterBy("type", "knight"),
+            whiteBishops = playerWhitePieces.filterBy("type", "bishop"),
+            whiteRooks = playerWhitePieces.filterBy("type", "rook"),
+            whiteQueen = playerWhitePieces.findBy("type", "queen"),
+            whiteKing = playerWhitePieces.findBy("type", "king"),
+            blackPawns = playerBlackPieces.filterBy("type", "pawn"),
+            blackKnights = playerBlackPieces.filterBy("type", "knight"),
+            blackBishops = playerBlackPieces.filterBy("type", "bishop"),
+            blackRooks = playerBlackPieces.filterBy("type", "rook"),
+            blackQueen = playerBlackPieces.findBy("type", "queen"),
+            blackKing = playerBlackPieces.findBy("type", "king");
 
-        board.get("spots").findBy("name", "A1").set("piece", whiteRooks.get("firstObject"));
-        board.get("spots").findBy("name", "B1").set("piece", whiteKnights.get("firstObject"));
-        board.get("spots").findBy("name", "C1").set("piece", whiteBishops.get("firstObject"));
-        board.get("spots").findBy("name", "D1").set("piece", whiteQueen);
-        board.get("spots").findBy("name", "E1").set("piece", whiteKing);
-        board.get("spots").findBy("name", "F1").set("piece", whiteBishops.get("lastObject"));
-        board.get("spots").findBy("name", "G1").set("piece", whiteKnights.get("lastObject"));
-        board.get("spots").findBy("name", "H1").set("piece", whiteRooks.get("lastObject"));
+        spots.findBy("name", "A1").set("piece", whiteRooks.get("firstObject"));
+        spots.findBy("name", "B1").set("piece", whiteKnights.get("firstObject"));
+        spots.findBy("name", "C1").set("piece", whiteBishops.get("firstObject"));
+        spots.findBy("name", "D1").set("piece", whiteQueen);
+        spots.findBy("name", "E1").set("piece", whiteKing);
+        spots.findBy("name", "F1").set("piece", whiteBishops.get("lastObject"));
+        spots.findBy("name", "G1").set("piece", whiteKnights.get("lastObject"));
+        spots.findBy("name", "H1").set("piece", whiteRooks.get("lastObject"));
 
-        board.get("spots")
+        spots
           .filter(function (spot) {
             return spot.get("name")[1] === "2";
           })
@@ -82,7 +81,7 @@ export default Ember.Controller.extend({
             spot.set("piece", whitePawns[index]);
           });
 
-        board.get("spots")
+        spots
           .filter(function (spot) {
             return spot.get("name")[1] === "7";
           })
@@ -90,14 +89,14 @@ export default Ember.Controller.extend({
             spot.set("piece", blackPawns[index]);
           });
 
-        board.get("spots").findBy("name", "A8").set("piece", blackRooks.get("firstObject"));
-        board.get("spots").findBy("name", "B8").set("piece", blackKnights.get("firstObject"));
-        board.get("spots").findBy("name", "C8").set("piece", blackBishops.get("firstObject"));
-        board.get("spots").findBy("name", "D8").set("piece", blackQueen);
-        board.get("spots").findBy("name", "E8").set("piece", blackKing);
-        board.get("spots").findBy("name", "F8").set("piece", blackBishops.get("lastObject"));
-        board.get("spots").findBy("name", "G8").set("piece", blackKnights.get("lastObject"));
-        board.get("spots").findBy("name", "H8").set("piece", blackRooks.get("lastObject"));
+        spots.findBy("name", "A8").set("piece", blackRooks.get("firstObject"));
+        spots.findBy("name", "B8").set("piece", blackKnights.get("firstObject"));
+        spots.findBy("name", "C8").set("piece", blackBishops.get("firstObject"));
+        spots.findBy("name", "D8").set("piece", blackQueen);
+        spots.findBy("name", "E8").set("piece", blackKing);
+        spots.findBy("name", "F8").set("piece", blackBishops.get("lastObject"));
+        spots.findBy("name", "G8").set("piece", blackKnights.get("lastObject"));
+        spots.findBy("name", "H8").set("piece", blackRooks.get("lastObject"));
       };
 
       setPieceOnBoard(boardA);
