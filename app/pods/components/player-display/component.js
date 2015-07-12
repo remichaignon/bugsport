@@ -11,6 +11,14 @@ export default Ember.Component.extend({
   }.property("model.pieces.@each.spot"),
 
   actions: {
+    sit: function () {
+      var player = this.get("model"),
+          user = this.session.get("user");
+
+      player.set("user", user);
+
+      return Ember.RSVP.allSettled([player.save(), user.save()]);
+    },
     selectPiece: function (piece) { this.sendAction("selectPiece", piece); }
   }
 });

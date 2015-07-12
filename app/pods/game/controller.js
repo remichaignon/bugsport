@@ -6,6 +6,7 @@ export default Ember.Controller.extend({
   actions: {
     selectPiece: function (piece) {
       if (this.get("pieceToMove")) { return; }
+      if (piece.get("player.user.id") !== this.session.get("user.id")) { return; }
 
       this.set("pieceToMove", piece);
     },
@@ -59,7 +60,6 @@ export default Ember.Controller.extend({
           return Ember.RSVP.allSettled(promises);
         })
         .then(function () {
-          debugger;
           this.set("pieceToMove", null);
         }.bind(this))
         .catch(function (err) {

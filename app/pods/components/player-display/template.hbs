@@ -1,5 +1,15 @@
 <p>
-  Player {{#if model.isWhite}}white{{else}}black{{/if}} ///
+  Player {{#if model.isWhite}}white{{else}}black{{/if}}
+
+  {{#if model.user}}
+    {{model.user.id}}
+  {{else}}
+    {{#unless session.user.player}}
+      <button class="pure-button button-secondary" {{action "sit"}}>Sit Down</button>
+    {{/unless}}
+  {{/if}}
+
+  ///
 
   <small>pieces to drop:</small>
 

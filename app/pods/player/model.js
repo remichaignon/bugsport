@@ -4,6 +4,8 @@ export default DS.Model.extend({
   board: DS.belongsTo("board", { async: true }),
   pieces: DS.hasMany("piece", { async: true }),
 
+  user: DS.belongsTo("user", {async: true }),
+
   isWhite: function () {
     return this === this.get("board.playerWhite");
   }.property("board.playerWhite"),

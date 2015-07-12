@@ -5,7 +5,13 @@ module.exports = function(environment) {
     modulePrefix: "bugsport",
     podModulePrefix: "bugsport/pods",
     environment: environment,
-    contentSecurityPolicy: { "connect-src": "'self' wss://*.firebaseio.com", "style-src": "'self' yui.yahooapis.com" },
+    contentSecurityPolicy: {
+      "connect-src": "'self' wss://*.firebaseio.com",
+      "default-src": "'self' https://*.firebaseio.com",
+      "frame-src": "'self' https://*.firebaseio.com",
+      "script-src": "'self' https://*.firebaseio.com",
+      "style-src": "'self' yui.yahooapis.com"
+    },
     firebase: "https://bugsport.firebaseio.com/",
     baseURL: "/",
     locationType: "auto",
