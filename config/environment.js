@@ -10,7 +10,7 @@ module.exports = function(environment) {
       "default-src": "'self' https://*.firebaseio.com",
       "frame-src": "'self' https://*.firebaseio.com",
       "script-src": "'self' https://*.firebaseio.com",
-      "style-src": "'self' yui.yahooapis.com"
+      "style-src": "'self' yui.yahooapis.com cdn.jsdelivr.net"
     },
     firebase: "https://bugsport.firebaseio.com/",
     baseURL: "/",

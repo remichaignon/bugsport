@@ -1,3 +1,6 @@
 <div class="content">
+  {{#if model.isOver}}
+    <h1 class="button-error">GAME OVER</h1>
+  {{/if}}
   {{game-display model=model selectPiece="selectPiece" selectSpot="selectSpot"}}
 </div>

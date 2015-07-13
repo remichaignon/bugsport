@@ -4,8 +4,10 @@
   {{#if model.user}}
     {{model.user.id}}
   {{else}}
-    {{#unless session.user.player}}
-      <button class="pure-button button-secondary" {{action "sit"}}>Sit Down</button>
+    {{#unless model.board.game.isOver}}
+      {{#unless session.user.player}}
+        <button class="pure-button button-secondary" {{action "sit"}}>Sit Down</button>
+      {{/unless}}
     {{/unless}}
   {{/if}}
 

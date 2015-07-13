@@ -1,3 +1,5 @@
 <div class="content">
-  <button class="pure-button pure-button-primary" {{action "save"}}>Create New Game ?</button>
+  {{#unless model.boardA}}
+    <button class="pure-button pure-button-primary" {{action "save"}}>Create New Game ?</button>
+  {{/unless}}
 </div>

@@ -5,12 +5,14 @@ export default Ember.Controller.extend({
 
   actions: {
     selectPiece: function (piece) {
+      if (this.get("model.isOver")) { return; }
       if (this.get("pieceToMove")) { return; }
       if (piece.get("player.user.id") !== this.session.get("user.id")) { return; }
 
       this.set("pieceToMove", piece);
     },
     selectSpot: function (spot) {
+      if (this.get("model.isOver")) { return; }
       if (!this.get("pieceToMove")) { return; }
 
       if (this.get("pieceToMove.spot.id") === spot.get("id")) { return; }
@@ -20,14 +22,23 @@ export default Ember.Controller.extend({
       spot.get("piece")
         .then(function (pieceToTake) {
           if (pieceToTake) {
-            return Ember.RSVP.hashSettled({
-              isTaking: true,
-              pieceToMove: pieceToMove,
-              pieceToTake: pieceToTake,
-              opponent: pieceToMove.get("player.opponent"),
-              partner: pieceToMove.get("player.partner"),
-              spot: spot
-            });
+            var hash = {};
+
+            if (pieceToTake.get("type") === "king") {
+              this.set("model.isOver", true);
+
+              hash.gameOver = true;
+              hash.game = this.get("model").save();
+            }
+
+            hash.isTaking = true;
+            hash.pieceToMove = pieceToMove;
+            hash.pieceToTake = pieceToTake;
+            hash.opponent = pieceToMove.get("player.opponent");
+            hash.partner = pieceToMove.get("player.partner");
+            hash.spot = spot;
+
+            return Ember.RSVP.hashSettled(hash);
           }
 
           return Ember.RSVP.hashSettled({

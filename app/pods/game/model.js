@@ -12,6 +12,7 @@ export default DS.Model.extend({
 
   name: DS.attr("string"),
   createdAt: DS.attr("date"),
+  isOver: DS.attr("boolean", { defaultValue: false }),
 
   playerAWhite: Ember.computed.alias("boardA.playerWhite"),
   playerABlack: Ember.computed.alias("boardA.playerBlack"),
