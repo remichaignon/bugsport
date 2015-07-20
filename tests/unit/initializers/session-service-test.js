@@ -1,12 +1,12 @@
-import Ember from 'ember';
-import { initialize } from '../../../initializers/session-service';
-import { module, test } from 'qunit';
+import Ember from "ember";
+import { initialize } from "simpleenergy/initializers/session-service";
+import { expect, module, test } from "qunit";
 
 var container, application;
 
-module('Unit | Initializer | session service', {
-  beforeEach: function() {
-    Ember.run(function() {
+module("Unit | Initializer | session service", {
+  beforeEach: function () {
+    Ember.run(function () {
       application = Ember.Application.create();
       container = application.__container__;
       application.deferReadiness();
@@ -14,10 +14,12 @@ module('Unit | Initializer | session service', {
   }
 });
 
-// Replace this with your real tests.
-test('it works', function(assert) {
+test("inject", function (assert) {
+  assert.expect(3);
+
   initialize(container, application);
 
-  // you would normally confirm the results of the initializer here
-  assert.ok(true);
+  assert.ok(container.lookup("component:test").session, "Session service is injected onto components.");
+  assert.ok(container.lookup("controller:test").session, "Session service is injected onto controller.");
+  assert.ok(container.lookup("route:test").session, "Session service is injected onto routes.");
 });

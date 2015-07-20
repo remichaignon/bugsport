@@ -12,6 +12,7 @@ export default Ember.Component.extend({
 
   actions: {
     sit: function () {
+      debugger;
       var player = this.get("model"),
           user = this.session.get("user");
 

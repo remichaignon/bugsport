@@ -1,17 +1,14 @@
+import Ember from "ember";
 import DS from "ember-data";
 
 export default DS.Model.extend({
   board: DS.belongsTo("board", { async: true }),
   pieces: DS.hasMany("piece", { async: true }),
 
-  user: DS.belongsTo("user", {async: true }),
+  user: DS.belongsTo("user", { async: true }),
 
-  isWhite: function () {
-    return this === this.get("board.playerWhite");
-  }.property("board.playerWhite"),
-  isBlack: function () {
-    return this === this.get("board.playerBlack");
-  }.property("board.playerBlack"),
+  isBlack: false,
+  isWhite: Ember.computed.not("isBlack"),
 
   partner: function () {
     var color = this.get("isWhite") ? "Black" : "White";

@@ -2,7 +2,8 @@ import Ember from "ember";
 
 export default Ember.Route.extend({
   model: function () {
-    return this.store.createRecord("user").save()
+    return this.store.createRecord("user")
+      .save()
       .then(function (user) {
         this.session.set("user", user);
       }.bind(this));

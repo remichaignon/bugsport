@@ -6,10 +6,10 @@ export default Ember.Controller.extend({
       var game = this.get("model"),
           boardA = this.store.createRecord("board", { name: "A", game: game }),
           boardB = this.store.createRecord("board", { name: "B", game: game }),
-          boardAPlayerWhite = this.store.createRecord("player", { board: boardA }),
-          boardAPlayerBlack = this.store.createRecord("player", { board: boardA }),
-          boardBPlayerWhite = this.store.createRecord("player", { board: boardB }),
-          boardBPlayerBlack = this.store.createRecord("player", { board: boardB });
+          boardAPlayerWhite = this.store.createRecord("player", { board: boardA, isBlack: false }),
+          boardAPlayerBlack = this.store.createRecord("player", { board: boardA, isBlack: true }),
+          boardBPlayerWhite = this.store.createRecord("player", { board: boardB, isBlack: false }),
+          boardBPlayerBlack = this.store.createRecord("player", { board: boardB, isBlack: true });
 
       var spots = [
         "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1",
@@ -121,7 +121,6 @@ export default Ember.Controller.extend({
       Ember.RSVP
         .allSettled(promises)
         .then(function (all) {
-          debugger;
           this.transitionToRoute("game", game);
         }.bind(this))
         .catch(function (err) {
