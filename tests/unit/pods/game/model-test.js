@@ -1,12 +1,22 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { moduleForModel, test } from "ember-qunit";
 
-moduleForModel('game', 'Unit | Model | game', {
-  // Specify the other units that are required for this test.
-  needs: []
+moduleForModel("game", "Unit | Model | game", {
+  needs: ["model:board", "model:player", "model:spot"]
 });
 
-test('it exists', function(assert) {
+test("it exists", function (assert) {
   var model = this.subject();
-  // var store = this.store();
   assert.ok(!!model);
+});
+
+test("board relationships", function (assert) {
+  assert.expect(0);
+
+  // TODO
+});
+
+test("players aliases", function (assert) {
+  assert.expect(0);
+
+  // TODO
 });

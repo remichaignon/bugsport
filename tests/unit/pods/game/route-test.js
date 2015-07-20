@@ -1,11 +1,8 @@
-import { moduleFor, test } from 'ember-qunit';
+import { moduleFor, test } from "ember-qunit";
 
-moduleFor('route:game', 'Unit | Route | game', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
-});
+moduleFor("route:game", "Unit | Route | game");
 
-test('it exists', function(assert) {
+test("it exists", function (assert) {
   var route = this.subject();
   assert.ok(route);
 });

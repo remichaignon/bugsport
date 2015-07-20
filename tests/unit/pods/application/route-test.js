@@ -1,11 +1,14 @@
-import { moduleFor, test } from 'ember-qunit';
+import { moduleFor, test } from "ember-qunit";
 
-moduleFor('route:application', 'Unit | Route | application', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
-});
+moduleFor("route:application", "Unit | Route | application");
 
-test('it exists', function(assert) {
+test("it exists", function (assert) {
   var route = this.subject();
   assert.ok(route);
+});
+
+test("create user session", function (assert) {
+  assert.expect(0);
+
+  // TODO
 });

@@ -1,4 +1,4 @@
-import config from "simpleenergy/config/environment";
+import config from "bugsport/config/environment";
 import Firebase from "firebase";
 import FirebaseAdapter from "emberfire/adapters/firebase";
 

@@ -120,7 +120,7 @@ export default Ember.Controller.extend({
 
       Ember.RSVP
         .allSettled(promises)
-        .then(function (all) {
+        .then(function () {
           this.transitionToRoute("game", game);
         }.bind(this))
         .catch(function (err) {

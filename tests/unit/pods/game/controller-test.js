@@ -1,12 +1,20 @@
-import { moduleFor, test } from 'ember-qunit';
+import { moduleFor, test } from "ember-qunit";
 
-moduleFor('controller:game', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
-});
+moduleFor("controller:game");
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
+test("it exists", function (assert) {
   var controller = this.subject();
   assert.ok(controller);
+});
+
+test("select piece", function (assert) {
+  assert.expect(0);
+
+  // TODO
+});
+
+test("select move", function (assert) {
+  assert.expect(0);
+
+  // TODO
 });

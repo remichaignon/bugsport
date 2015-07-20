@@ -1,5 +1,5 @@
 import Ember from "ember";
-import { initialize } from "simpleenergy/initializers/session-service";
+import { initialize } from "bugsport/initializers/session-service";
 import { expect, module, test } from "qunit";
 
 var container, application;
