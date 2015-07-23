@@ -15,8 +15,8 @@ test("it exists", function (assert) {
 test("board relationship", function (assert) {
   assert.expect(2);
 
-  var Player = this.store().modelFor("player");
-  var relationship = Ember.get(Player, "relationshipsByName").get("board");
+  var Player = this.store().modelFor("player"),
+      relationship = Ember.get(Player, "relationshipsByName").get("board");
 
   assert.equal(relationship.key, "board", "Player's model has a board key.");
   assert.equal(relationship.kind, "belongsTo", "Player's model's board key is of `belongsTo` kind.");
@@ -25,8 +25,8 @@ test("board relationship", function (assert) {
 test("piece relationship", function (assert) {
   assert.expect(2);
 
-  var Player = this.store().modelFor("player");
-  var relationship = Ember.get(Player, "relationshipsByName").get("pieces");
+  var Player = this.store().modelFor("player"),
+      relationship = Ember.get(Player, "relationshipsByName").get("pieces");
 
   assert.equal(relationship.key, "pieces", "Player's model has a pieces key.");
   assert.equal(relationship.kind, "hasMany", "Player's model's pieces key is of `hasMany` kind.");
@@ -35,8 +35,8 @@ test("piece relationship", function (assert) {
 test("user relationship", function (assert) {
   assert.expect(2);
 
-  var Player = this.store().modelFor("player");
-  var relationship = Ember.get(Player, "relationshipsByName").get("user");
+  var Player = this.store().modelFor("player"),
+      relationship = Ember.get(Player, "relationshipsByName").get("user");
 
   assert.equal(relationship.key, "user", "Player's model has a user key.");
   assert.equal(relationship.kind, "belongsTo", "Player's model's user key is of `belongsTo` kind.");

@@ -14,10 +14,10 @@ export default DS.Model.extend({
     var color = this.get("isWhite") ? "Black" : "White";
 
     return this.get("board.otherBoard.player" + color);
-  }.property("board.players.@each", "isWhite"),
+  }.property("board.otherBoard.playerBlack", "board.otherBoard.playerWhite", "isWhite"),
   opponent: function () {
     var color = this.get("isWhite") ? "Black" : "White";
 
     return this.get("board.player" + color);
-  }.property("board.players.@each", "isWhite")
+  }.property("board.playerBlack", "board.playerWhite", "isWhite")
 });

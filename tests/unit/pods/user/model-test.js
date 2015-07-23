@@ -15,8 +15,8 @@ test("it exists", function (assert) {
 test("player relationship", function (assert) {
   assert.expect(2);
 
-  var User = this.store().modelFor("user");
-  var relationship = Ember.get(User, "relationshipsByName").get("player");
+  var User = this.store().modelFor("user"),
+      relationship = Ember.get(User, "relationshipsByName").get("player");
 
   assert.equal(relationship.key, "player", "User's model has a player key.");
   assert.equal(relationship.kind, "belongsTo", "User's model's player key is of `belongsTo` kind.");

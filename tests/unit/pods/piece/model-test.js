@@ -15,8 +15,8 @@ test("it exists", function (assert) {
 test("player relationship", function (assert) {
   assert.expect(2);
 
-  var Piece = this.store().modelFor("piece");
-  var relationship = Ember.get(Piece, "relationshipsByName").get("player");
+  var Piece = this.store().modelFor("piece"),
+      relationship = Ember.get(Piece, "relationshipsByName").get("player");
 
   assert.equal(relationship.key, "player", "Piece's model has a player key.");
   assert.equal(relationship.kind, "belongsTo", "Piece's model's player key is of `belongsTo` kind.");
@@ -25,8 +25,8 @@ test("player relationship", function (assert) {
 test("spot relationship", function (assert) {
   assert.expect(2);
 
-  var Piece = this.store().modelFor("piece");
-  var relationship = Ember.get(Piece, "relationshipsByName").get("spot");
+  var Piece = this.store().modelFor("piece"),
+      relationship = Ember.get(Piece, "relationshipsByName").get("spot");
 
   assert.equal(relationship.key, "spot", "Piece's model has a spot key.");
   assert.equal(relationship.kind, "belongsTo", "Piece's model's spot key is of `belongsTo` kind.");
@@ -124,7 +124,27 @@ test("board", function (assert) {
 });
 
 test("color", function (assert) {
-  assert.expect(0);
+  assert.expect(8);
 
-  // TODO
+  var model = this.subject(),
+      store = this.store(),
+      player;
+
+  assert.ok(!model.get("isBlack"), "Neither black by default.");
+  assert.ok(!model.get("isWhite"), "Nor white by default.");
+
+  Ember.run(function () {
+    player = store.createRecord("player");
+    model.set("player", player);
+  });
+  assert.ok(!model.get("isBlack"), "Not black when empty player is set.");
+  assert.ok(model.get("isWhite"), "White when empty player is set.");
+
+  Ember.run(function () { player.set("isBlack", true); });
+  assert.ok(model.get("isBlack"), "Black when player is set to black.");
+  assert.ok(!model.get("isWhite"), "Not white when player is set to black.");
+
+  Ember.run(function () { player.set("isBlack", false); });
+  assert.ok(!model.get("isBlack"), "Not black when player is set to not black.");
+  assert.ok(model.get("isWhite"), "White when player is set to not black.");
 });

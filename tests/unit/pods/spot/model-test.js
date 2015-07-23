@@ -15,8 +15,8 @@ test("it exists", function(assert) {
 test("board relationship", function (assert) {
   assert.expect(2);
 
-  var Spot = this.store().modelFor("spot");
-  var relationship = Ember.get(Spot, "relationshipsByName").get("board");
+  var Spot = this.store().modelFor("spot"),
+      relationship = Ember.get(Spot, "relationshipsByName").get("board");
 
   assert.equal(relationship.key, "board", "Spot's model has a board key.");
   assert.equal(relationship.kind, "belongsTo", "Spot's model's board key is of `belongsTo` kind.");
@@ -25,8 +25,8 @@ test("board relationship", function (assert) {
 test("piece relationship", function (assert) {
   assert.expect(2);
 
-  var Spot = this.store().modelFor("spot");
-  var relationship = Ember.get(Spot, "relationshipsByName").get("piece");
+  var Spot = this.store().modelFor("spot"),
+      relationship = Ember.get(Spot, "relationshipsByName").get("piece");
 
   assert.equal(relationship.key, "piece", "Spot's model has a piece key.");
   assert.equal(relationship.kind, "belongsTo", "Spot's model's piece key is of `belongsTo` kind.");
