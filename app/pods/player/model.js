@@ -10,14 +10,14 @@ export default DS.Model.extend({
   isBlack: false,
   isWhite: Ember.computed.not("isBlack"),
 
-  partner: function () {
-    var color = this.get("isWhite") ? "Black" : "White";
-
-    return this.get("board.otherBoard.player" + color);
-  }.property("board.otherBoard.playerBlack", "board.otherBoard.playerWhite", "isWhite"),
   opponent: function () {
     var color = this.get("isWhite") ? "Black" : "White";
 
     return this.get("board.player" + color);
-  }.property("board.playerBlack", "board.playerWhite", "isWhite")
+  }.property("board.playerBlack", "board.playerWhite", "isWhite"),
+  partner: function () {
+    var color = this.get("isWhite") ? "Black" : "White";
+
+    return this.get("board.otherBoard.player" + color);
+  }.property("board.otherBoard.playerBlack", "board.otherBoard.playerWhite", "isWhite")
 });
