@@ -69,13 +69,53 @@ test("other board", function (assert) {
 });
 
 test("player black", function (assert) {
-  assert.expect(0);
+  assert.expect(4);
 
-  // TODO
+  var model = this.subject(),
+      store = this.store(),
+      playerBlack,
+      playerWhite;
+
+  assert.ok(!model.get("playerBlack"), "No player black by default.");
+
+  Ember.run(function () {
+    playerWhite = store.createRecord("player", { board: model, isBlack: false });
+  });
+  assert.ok(!model.get("playerBlack"), "No player black when the only player is white.");
+
+  Ember.run(function () {
+    playerBlack = store.createRecord("player", { board: model, isBlack: true });
+  });
+  assert.equal(model.get("playerBlack"), playerBlack, "Player black is the player we expect.");
+
+  Ember.run(function () {
+    model.get("players").removeObject(playerWhite);
+  });
+  assert.equal(model.get("playerBlack"), playerBlack, "Player black is the player we expect when they are the only player.");
 });
 
 test("player white", function (assert) {
-  assert.expect(0);
+  assert.expect(4);
 
-  // TODO
+  var model = this.subject(),
+      store = this.store(),
+      playerBlack,
+      playerWhite;
+
+  assert.ok(!model.get("playerWhite"), "No player white by default.");
+
+  Ember.run(function () {
+    playerBlack = store.createRecord("player", { board: model, isBlack: true });
+  });
+  assert.ok(!model.get("playerWhite"), "No player white when the only player is black.");
+
+  Ember.run(function () {
+    playerWhite = store.createRecord("player", { board: model, isBlack: false });
+  });
+  assert.equal(model.get("playerWhite"), playerWhite, "Player white is the player we expect.");
+
+  Ember.run(function () {
+    model.get("players").removeObject(playerBlack);
+  });
+  assert.equal(model.get("playerWhite"), playerWhite, "Player white is the player we expect when they are the only player.");
 });
