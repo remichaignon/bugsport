@@ -61,72 +61,68 @@ test("color", function (assert) {
 test("opponent", function (assert) {
   assert.expect(8);
 
-  var model = this.subject(),
+  var you = this.subject(),
       store = this.store(),
       board,
       opponent;
 
-  assert.ok(!model.get("opponent"), "No opponent by default.");
+  assert.ok(!you.get("opponent"), "No opponent by default.");
 
   Ember.run(function () {
     board = store.createRecord("board", { name: "A" });
-    model.setProperties({ board: board, isBlack: false });
+    you.setProperties({ board: board, isBlack: false });
   });
-  assert.ok(!model.get("opponent"), "No opponent when you're alone at the table.");
+  assert.ok(!you.get("opponent"), "No opponent when you're alone at the table.");
 
   Ember.run(function () {
     opponent = store.createRecord("player", { board: board, isBlack: true });
   });
-  assert.equal(model.get("opponent"), opponent, "Opponent is the player we expect.");
-  assert.equal(opponent.get("opponent"), model, "You are your opponent's opponent.");
+  assert.equal(you.get("opponent"), opponent, "Your opponent is the player we expect.");
+  assert.equal(opponent.get("opponent"), you, "You are your opponent's opponent.");
 
   Ember.run(function () {
     opponent.set("isBlack", false);
-    model.set("isBlack", true);
+    you.set("isBlack", true);
   });
-  assert.equal(model.get("opponent"), opponent, "Opponent is the player we expect (switch sides).");
-  assert.equal(opponent.get("opponent"), model, "You are your opponent's opponent (switch sides).");
+  assert.equal(you.get("opponent"), opponent, "Your opponent is the player we expect (switch sides).");
+  assert.equal(opponent.get("opponent"), you, "You are your opponent's opponent (switch sides).");
 
   Ember.run(function () {
     board.set("name", "B");
   });
-  assert.equal(model.get("opponent"), opponent, "Opponent exists (switch board).");
-  assert.equal(opponent.get("opponent"), model, "You are your opponent's opponent (switch board).");
+  assert.equal(you.get("opponent"), opponent, "Your opponent is the player we expect (switch board).");
+  assert.equal(opponent.get("opponent"), you, "You are your opponent's opponent (switch board).");
 });
 
 test("partner", function (assert) {
-  assert.expect(0);
-  // assert.expect(8);
-  //
-  // var model = this.subject(),
-  //     store = this.store(),
-  //     board,
-  //     partner;
-  //
-  // assert.ok(!model.get("partner"), "No partner by default.");
-  //
-  // Ember.run(function () {
-  //   board = store.createRecord("board", { name: "A" });
-  //   model.setProperties({ board: board, isBlack: false });
-  // });
-  // assert.ok(!model.get("opponent"), "No opponent when you're alone at the table.");
-  //
-  // Ember.run(function () {
-  //   opponent = store.createRecord("player", { board: board, isBlack: true });
-  // });
-  // assert.equal(model.get("opponent"), opponent, "Opponent exists.");
-  // assert.equal(opponent.get("opponent"), model, "You are your opponent's opponent.");
-  //
-  // Ember.run(function () {
-  //   opponent.set("isBlack", false);
-  //   model.set("isBlack", true);
-  // });
-  // assert.equal(model.get("opponent"), opponent, "Opponent exists (switch sides).");
-  // assert.equal(opponent.get("opponent"), model, "You are your opponent's opponent (switch sides).");
-  //
-  // Ember.run(function () {
-  //   board.set("name", "B");
-  // });
-  // assert.equal(model.get("opponent"), opponent, "Opponent exists (switch board).");
-  // assert.equal(opponent.get("opponent"), model, "You are your opponent's opponent (switch board).");
+  assert.expect(6);
+
+  var you = this.subject(),
+      store = this.store(),
+      game,
+      yourBoard,
+      otherBoard,
+      opponent,
+      partner,
+      partnersOpponent;
+
+  assert.ok(!you.get("partner"), "No partner by default.");
+
+  Ember.run(function () {
+    game = store.createRecord("game");
+    yourBoard = store.createRecord("board", { name: "A", game: game });
+    otherBoard = store.createRecord("board", { name: "B", game: game });
+    you.setProperties({ board: yourBoard, isBlack: false });
+    opponent = store.createRecord("player", { board: yourBoard, isBlack: true });
+    partnersOpponent = store.createRecord("player", { board: otherBoard, isBlack: false });
+  });
+  assert.ok(!you.get("partner"), "No partner when everybody but your partner is at the table.");
+
+  Ember.run(function () {
+    partner = store.createRecord("player", { board: otherBoard, isBlack: true });
+  });
+  assert.equal(you.get("partner"), partner, "Your partner is the player we expect.");
+  assert.equal(partner.get("partner"), you, "You are your partner's partner.");
+  assert.equal(opponent.get("partner"), partnersOpponent, "Your opponent's partner is your partner's opponent.");
+  assert.equal(partnersOpponent.get("partner"), opponent, "Your partner's opponent's partner is your opponent.");
 });
