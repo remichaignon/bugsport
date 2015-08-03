@@ -1,13 +1,10 @@
 import { moduleFor, test } from "ember-qunit";
 
-moduleFor("controller:games/new", {
-  // Specify the other units that are required for this test.
-  // needs: ["controller:foo"]
-});
+moduleFor("controller:games/new");
 
 test("it exists", function (assert) {
+  assert.expect(1);
+
   var controller = this.subject();
   assert.ok(controller);
 });
-
-// TODO: Split up the save function and test it
