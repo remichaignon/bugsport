@@ -86,6 +86,8 @@ export default Ember.Route.extend({
     });
   },
   _setPiecesOnTheirSpot: function (blackPieces, whitePieces, spots) {
+    // TODO: Study performance - It's probably faster to find the piece and set
+    //  it on its spot, instead of finding the spot and set its piece.
     var blackPawns = blackPieces.filterBy("type", "pawn"),
         blackKnights = blackPieces.filterBy("type", "knight"),
         blackBishops = blackPieces.filterBy("type", "bishop"),

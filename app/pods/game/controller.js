@@ -73,8 +73,8 @@ export default Ember.Controller.extend({
         .then(function () {
           this.set("pieceToMove", null);
         }.bind(this))
-        .catch(function (err) {
-          debugger;
+        .catch(function (/*err*/) {
+          // debugger;
         });
     }
   }
