@@ -169,7 +169,7 @@ test("create pieces for player", function (assert) {
 });
 
 test("set pieces on their spot", function (assert) {
-  // assert.expect(0);
+  assert.expect(96);
 
   var route = this.subject(),
       store = route.store,
@@ -188,17 +188,144 @@ test("set pieces on their spot", function (assert) {
 
   var A1 = spots.findBy("name", "A1");
   assert.equal(A1.get("piece.type"), "rook", "Piece on `A1` is of correct type.");
-  assert.ok(!A1.get("piece.isBlack"), "Piece on `A1` is of correct color.");
-  assert.ok(A1.get("piece.isWhite"), "Piece on `A1` is of correct color (bis).");
-  assert.equal(spots.filterBy("piece", A1.get("piece")).length, 1, "Piece on `A1` is not set anywhere else.");
+  assert.ok(A1.get("piece.isWhite"), "Piece on `A1` is of correct color.");
 
-  // var emptySpotNames = [
-  //   "A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3",
-  //   "A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4",
-  //   "A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5",
-  //   "A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6"
-  // ];
-  // emptySpotNames.map(function (emptySpotName) {
-  //   assert.ok(Ember.isEmpty(spots.findBy("name", emptySpotName).get("piece")), "`" + emptySpotName + "` is empty.");
-  // });
+  var B1 = spots.findBy("name", "B1");
+  assert.equal(B1.get("piece.type"), "knight", "Piece on `B1` is of correct type.");
+  assert.ok(B1.get("piece.isWhite"), "Piece on `B1` is of correct color.");
+
+  var C1 = spots.findBy("name", "C1");
+  assert.equal(C1.get("piece.type"), "bishop", "Piece on `C1` is of correct type.");
+  assert.ok(C1.get("piece.isWhite"), "Piece on `C1` is of correct color.");
+
+  var D1 = spots.findBy("name", "D1");
+  assert.equal(D1.get("piece.type"), "queen", "Piece on `D1` is of correct type.");
+  assert.ok(D1.get("piece.isWhite"), "Piece on `D1` is of correct color.");
+
+  var E1 = spots.findBy("name", "E1");
+  assert.equal(E1.get("piece.type"), "king", "Piece on `E1` is of correct type.");
+  assert.ok(E1.get("piece.isWhite"), "Piece on `E1` is of correct color.");
+
+  var F1 = spots.findBy("name", "F1");
+  assert.equal(F1.get("piece.type"), "bishop", "Piece on `F1` is of correct type.");
+  assert.ok(F1.get("piece.isWhite"), "Piece on `F1` is of correct color.");
+
+  var G1 = spots.findBy("name", "G1");
+  assert.equal(G1.get("piece.type"), "knight", "Piece on `G1` is of correct type.");
+  assert.ok(G1.get("piece.isWhite"), "Piece on `G1` is of correct color.");
+
+  var H1 = spots.findBy("name", "H1");
+  assert.equal(H1.get("piece.type"), "rook", "Piece on `H1` is of correct type.");
+  assert.ok(H1.get("piece.isWhite"), "Piece on `H1` is of correct color.");
+
+  var A2 = spots.findBy("name", "A2");
+  assert.equal(A2.get("piece.type"), "pawn", "Piece on `A2` is of correct type.");
+  assert.ok(A2.get("piece.isWhite"), "Piece on `A2` is of correct color.");
+
+  var B2 = spots.findBy("name", "B2");
+  assert.equal(B2.get("piece.type"), "pawn", "Piece on `B2` is of correct type.");
+  assert.ok(B2.get("piece.isWhite"), "Piece on `B2` is of correct color.");
+
+  var C2 = spots.findBy("name", "C2");
+  assert.equal(C2.get("piece.type"), "pawn", "Piece on `C2` is of correct type.");
+  assert.ok(C2.get("piece.isWhite"), "Piece on `C2` is of correct color.");
+
+  var D2 = spots.findBy("name", "D2");
+  assert.equal(D2.get("piece.type"), "pawn", "Piece on `D2` is of correct type.");
+  assert.ok(D2.get("piece.isWhite"), "Piece on `D2` is of correct color.");
+
+  var E2 = spots.findBy("name", "E2");
+  assert.equal(E2.get("piece.type"), "pawn", "Piece on `E2` is of correct type.");
+  assert.ok(E2.get("piece.isWhite"), "Piece on `E2` is of correct color.");
+
+  var F2 = spots.findBy("name", "F2");
+  assert.equal(F2.get("piece.type"), "pawn", "Piece on `F2` is of correct type.");
+  assert.ok(F2.get("piece.isWhite"), "Piece on `F2` is of correct color.");
+
+  var G2 = spots.findBy("name", "G2");
+  assert.equal(G2.get("piece.type"), "pawn", "Piece on `G2` is of correct type.");
+  assert.ok(G2.get("piece.isWhite"), "Piece on `G2` is of correct color.");
+
+  var H2 = spots.findBy("name", "H2");
+  assert.equal(H2.get("piece.type"), "pawn", "Piece on `H2` is of correct type.");
+  assert.ok(H2.get("piece.isWhite"), "Piece on `H2` is of correct color.");
+
+  var emptySpotNames = [
+    "A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3",
+    "A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4",
+    "A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5",
+    "A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6"
+  ];
+  emptySpotNames.map(function (emptySpotName) {
+    spots
+      .findBy("name", emptySpotName)
+      .get("piece")
+      .then(function (piece) {
+        assert.ok(!piece, "`" + emptySpotName + "` has no piece. ");
+      });
+  });
+
+  var A7 = spots.findBy("name", "A7");
+  assert.equal(A7.get("piece.type"), "pawn", "Piece on `A7` is of correct type.");
+  assert.ok(A7.get("piece.isBlack"), "Piece on `A7` is of correct color.");
+
+  var B7 = spots.findBy("name", "B7");
+  assert.equal(B7.get("piece.type"), "pawn", "Piece on `B7` is of correct type.");
+  assert.ok(B7.get("piece.isBlack"), "Piece on `B7` is of correct color.");
+
+  var C7 = spots.findBy("name", "C7");
+  assert.equal(C7.get("piece.type"), "pawn", "Piece on `C7` is of correct type.");
+  assert.ok(C7.get("piece.isBlack"), "Piece on `C7` is of correct color.");
+
+  var D7 = spots.findBy("name", "D7");
+  assert.equal(D7.get("piece.type"), "pawn", "Piece on `D7` is of correct type.");
+  assert.ok(D7.get("piece.isBlack"), "Piece on `D7` is of correct color.");
+
+  var E7 = spots.findBy("name", "E7");
+  assert.equal(E7.get("piece.type"), "pawn", "Piece on `E7` is of correct type.");
+  assert.ok(E7.get("piece.isBlack"), "Piece on `E7` is of correct color.");
+
+  var F7 = spots.findBy("name", "F7");
+  assert.equal(F7.get("piece.type"), "pawn", "Piece on `F7` is of correct type.");
+  assert.ok(F7.get("piece.isBlack"), "Piece on `F7` is of correct color.");
+
+  var G7 = spots.findBy("name", "G7");
+  assert.equal(G7.get("piece.type"), "pawn", "Piece on `G7` is of correct type.");
+  assert.ok(G7.get("piece.isBlack"), "Piece on `G7` is of correct color.");
+
+  var H7 = spots.findBy("name", "H7");
+  assert.equal(H7.get("piece.type"), "pawn", "Piece on `H7` is of correct type.");
+  assert.ok(H7.get("piece.isBlack"), "Piece on `H7` is of correct color.");
+
+  var A8 = spots.findBy("name", "A8");
+  assert.equal(A8.get("piece.type"), "rook", "Piece on `A8` is of correct type.");
+  assert.ok(A8.get("piece.isBlack"), "Piece on `A8` is of correct color.");
+
+  var B8 = spots.findBy("name", "B8");
+  assert.equal(B8.get("piece.type"), "knight", "Piece on `B8` is of correct type.");
+  assert.ok(B8.get("piece.isBlack"), "Piece on `B8` is of correct color.");
+
+  var C8 = spots.findBy("name", "C8");
+  assert.equal(C8.get("piece.type"), "bishop", "Piece on `C8` is of correct type.");
+  assert.ok(C8.get("piece.isBlack"), "Piece on `C8` is of correct color.");
+
+  var D8 = spots.findBy("name", "D8");
+  assert.equal(D8.get("piece.type"), "queen", "Piece on `D8` is of correct type.");
+  assert.ok(D8.get("piece.isBlack"), "Piece on `D8` is of correct color.");
+
+  var E8 = spots.findBy("name", "E8");
+  assert.equal(E8.get("piece.type"), "king", "Piece on `E8` is of correct type.");
+  assert.ok(E8.get("piece.isBlack"), "Piece on `E8` is of correct color.");
+
+  var F8 = spots.findBy("name", "F8");
+  assert.equal(F8.get("piece.type"), "bishop", "Piece on `F8` is of correct type.");
+  assert.ok(F8.get("piece.isBlack"), "Piece on `F8` is of correct color.");
+
+  var G8 = spots.findBy("name", "G8");
+  assert.equal(G8.get("piece.type"), "knight", "Piece on `G8` is of correct type.");
+  assert.ok(G8.get("piece.isBlack"), "Piece on `G8` is of correct color.");
+
+  var H8 = spots.findBy("name", "H8");
+  assert.equal(H8.get("piece.type"), "rook", "Piece on `H8` is of correct type.");
+  assert.ok(H8.get("piece.isBlack"), "Piece on `H8` is of correct color.");
 });
