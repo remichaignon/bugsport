@@ -20,10 +20,17 @@ test("model", function (assert) {
 });
 
 test("after model", function (assert) {
-  assert.expect(0);
+  assert.expect(3);
 
-  // TODO
-  var route = this.subject();
+  var game = Ember.Object.create({ id: 5 }),
+      route = this.subject({
+        transitionTo: function (route, model) {
+          assert.ok(true, "`transitionTo` called on route.");
+          assert.equal(route, "game", "`game` passed as route.");
+          assert.deepEqual(model, game, "Game passed as model.");
+        }
+      });
+  route.afterModel(game);
 });
 
 test("create boards for game", function (assert) {
