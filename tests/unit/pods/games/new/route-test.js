@@ -13,10 +13,20 @@ test("it exists", function (assert) {
 });
 
 test("model", function (assert) {
-  assert.expect(0);
+  assert.expect(1);
 
-  // TODO
-  var route = this.subject();
+  var route = this.subject({ store: {
+        createRecord: function (type) {
+          return Ember.Object.create({
+            type: type,
+            save: function () { return Ember.RSVP.resolve(this); }
+          }); }
+      } });
+
+  route.model()
+    .then(function (model) {
+      assert.equal(model.get("type"), "game", "Record returned is of correct type.");
+    });
 });
 
 test("after model", function (assert) {
@@ -30,7 +40,18 @@ test("after model", function (assert) {
           assert.deepEqual(model, game, "Game passed as model.");
         }
       });
+
   route.afterModel(game);
+});
+
+test("redirect errored game", function (assert) {
+  assert.expect(2);
+
+  var route = this.subject({ transitionTo: function (route) {
+        assert.ok(true, "`transitionTo` called on route.");
+        assert.equal(route, "game-creation-error", "`game-creation-error` passed as route.");
+      } });
+  route._actions.error.apply(route);
 });
 
 test("create boards for game", function (assert) {

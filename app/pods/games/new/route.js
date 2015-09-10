@@ -86,6 +86,10 @@ export default Ember.Route.extend({
     });
   },
   _setPiecesOnTheirSpot: function (blackPieces, whitePieces, spots) {
+    blackPieces = blackPieces || [];
+    whitePieces = whitePieces || [];
+    spots = spots || [];
+
     // TODO: Study performance - It's probably faster to find the piece and set
     //  it on its spot, instead of finding the spot and set its piece.
     var blackPawns = blackPieces.filterBy("type", "pawn"),
@@ -101,30 +105,46 @@ export default Ember.Route.extend({
         whiteQueen = whitePieces.findBy("type", "queen"),
         whiteKing = whitePieces.findBy("type", "king");
 
-    spots.findBy("name", "A1").set("piece", whiteRooks.get("firstObject"));
-    spots.findBy("name", "B1").set("piece", whiteKnights.get("firstObject"));
-    spots.findBy("name", "C1").set("piece", whiteBishops.get("firstObject"));
-    spots.findBy("name", "D1").set("piece", whiteQueen);
-    spots.findBy("name", "E1").set("piece", whiteKing);
-    spots.findBy("name", "F1").set("piece", whiteBishops.get("lastObject"));
-    spots.findBy("name", "G1").set("piece", whiteKnights.get("lastObject"));
-    spots.findBy("name", "H1").set("piece", whiteRooks.get("lastObject"));
+    (spots.findBy("name", "A1") || Ember.Object.create()).set("piece", whiteRooks.get("firstObject"));
+    (spots.findBy("name", "B1") || Ember.Object.create()).set("piece", whiteKnights.get("firstObject"));
+    (spots.findBy("name", "C1") || Ember.Object.create()).set("piece", whiteBishops.get("firstObject"));
+    (spots.findBy("name", "D1") || Ember.Object.create()).set("piece", whiteQueen);
+    (spots.findBy("name", "E1") || Ember.Object.create()).set("piece", whiteKing);
+    (spots.findBy("name", "F1") || Ember.Object.create()).set("piece", whiteBishops.get("lastObject"));
+    (spots.findBy("name", "G1") || Ember.Object.create()).set("piece", whiteKnights.get("lastObject"));
+    (spots.findBy("name", "H1") || Ember.Object.create()).set("piece", whiteRooks.get("lastObject"));
 
     spots
-      .filter(function (spot) { return spot.get("name")[1] === "2"; })
-      .map(function (spot, index) { spot.set("piece", whitePawns[index]); });
+      .filter(function (spot) {
+        if (!spot || !spot.get("name")) { return; }
+
+        return spot.get("name")[1] === "2";
+      })
+      .map(function (spot, index) {
+        if (!spot) { return; }
+
+        spot.set("piece", whitePawns[index]);
+      });
 
     spots
-      .filter(function (spot) { return spot.get("name")[1] === "7"; })
-      .map(function (spot, index) { spot.set("piece", blackPawns[index]); });
+      .filter(function (spot) {
+        if (!spot || !spot.get("name")) { return; }
 
-    spots.findBy("name", "A8").set("piece", blackRooks.get("firstObject"));
-    spots.findBy("name", "B8").set("piece", blackKnights.get("firstObject"));
-    spots.findBy("name", "C8").set("piece", blackBishops.get("firstObject"));
-    spots.findBy("name", "D8").set("piece", blackQueen);
-    spots.findBy("name", "E8").set("piece", blackKing);
-    spots.findBy("name", "F8").set("piece", blackBishops.get("lastObject"));
-    spots.findBy("name", "G8").set("piece", blackKnights.get("lastObject"));
-    spots.findBy("name", "H8").set("piece", blackRooks.get("lastObject"));
+        return spot.get("name")[1] === "7";
+      })
+      .map(function (spot, index) {
+        if (!spot) { return; }
+
+        spot.set("piece", blackPawns[index]);
+      });
+
+    (spots.findBy("name", "A8") || Ember.Object.create()).set("piece", blackRooks.get("firstObject"));
+    (spots.findBy("name", "B8") || Ember.Object.create()).set("piece", blackKnights.get("firstObject"));
+    (spots.findBy("name", "C8") || Ember.Object.create()).set("piece", blackBishops.get("firstObject"));
+    (spots.findBy("name", "D8") || Ember.Object.create()).set("piece", blackQueen);
+    (spots.findBy("name", "E8") || Ember.Object.create()).set("piece", blackKing);
+    (spots.findBy("name", "F8") || Ember.Object.create()).set("piece", blackBishops.get("lastObject"));
+    (spots.findBy("name", "G8") || Ember.Object.create()).set("piece", blackKnights.get("lastObject"));
+    (spots.findBy("name", "H8") || Ember.Object.create()).set("piece", blackRooks.get("lastObject"));
   }
 });
