@@ -16,5 +16,21 @@ export default DS.Model.extend({
   board: Ember.computed.alias("spot.board"),
 
   isBlack: Ember.computed.alias("player.isBlack"),
-  isWhite: Ember.computed.alias("player.isWhite")
+  isWhite: Ember.computed.alias("player.isWhite"),
+
+  canGoTo: function (spot) {
+    if (this.get("spot.id")) {
+      return this.canMoveTo(spot);
+    }
+
+    return this.canDropTo(spot);
+  },
+  canMoveTo: function (/*spot*/) {
+    // TODO
+    return true;
+  },
+  canDropTo: function (/*spot*/) {
+    // TODO
+    return true;
+  }
 });

@@ -1,81 +1,81 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  pieceToMove: null,
+  selectedPiece: function () {
+    return (this.get("model.allPieces") || []).findBy("selected", true);
+  }.property("model.allPieces.@each.selected"),
 
   actions: {
     selectPiece: function (piece) {
-      if (this.get("model.isOver")) { return; }
-      if (this.get("pieceToMove")) { return; }
-      if (piece.get("player.user.id") !== this.session.get("user.id")) { return; }
+      if (this.get("model.isOver")) { return; } // Game is over
+      if (this.get("selectedPiece")) { return; } // A piece has already been selected
+      if (piece.get("player.user.id") !== this.session.get("user.id")) { return; } // Piece does not belong to logged in user
 
-      this.set("pieceToMove", piece);
+      piece.set("selected", true);
     },
     selectSpot: function (spot) {
-      if (this.get("model.isOver")) { return; }
-      if (!this.get("pieceToMove")) { return; }
+      var pieceToMove = this.get("selectedPiece");
 
-      if (this.get("pieceToMove.spot.id") === spot.get("id")) { return; }
+      if (this.get("model.isOver")) { return; } // Game is over
+      if (!pieceToMove) { return; } // No piece has been selected
 
-      var pieceToMove = this.get("pieceToMove");
+       // The selected piece is on the selected spot (cancel move)
+      if (pieceToMove.get("spot.id") === spot.get("id")) {
+        this._unselectAllPieces();
+        return;
+      }
+
+      if (!pieceToMove.canGoTo(spot.get("id"))) {
+        // TODO: Show message
+        return;
+      }
 
       spot.get("piece")
         .then(function (pieceToTake) {
-          if (pieceToTake) {
-            var hash = {};
+          if (!pieceToTake) { return Ember.RSVP.resolve(); }
 
-            if (pieceToTake.get("type") === "king") {
-              this.set("model.isOver", true);
-
-              hash.gameOver = true;
-              hash.game = this.get("model").save();
-            }
-
-            hash.isTaking = true;
-            hash.pieceToMove = pieceToMove;
-            hash.pieceToTake = pieceToTake;
-            hash.opponent = pieceToMove.get("player.opponent");
-            hash.partner = pieceToMove.get("player.partner");
-            hash.spot = spot;
-
-            return Ember.RSVP.hashSettled(hash);
-          }
-
-          return Ember.RSVP.hashSettled({
-            isTaking: false,
-            pieceToMove: pieceToMove,
-            spot: spot
-          });
+          return this._capturePieceAndPassItToPartner(pieceToMove.get("player"), pieceToTake);
         }.bind(this))
-        .then(function (hash) {
-          var promises = [];
+        .then(function (pieceToTake) {
+          if (pieceToTake && (pieceToTake.get("type") !== "king")) { return Ember.RSVP.resolve(); }
 
-          if (hash.isTaking.value) {
-            hash.pieceToTake.value.setProperties({
-              player: hash.partner.value,
-              spot: undefined
-            });
-            promises.push(
-              hash.pieceToTake.value.save(),
-              hash.partner.value.save(),
-              hash.opponent.value.save()
-            );
-          }
-
-          hash.pieceToMove.value.set("spot", hash.spot.value);
-          promises.push(
-            hash.pieceToMove.value.save(),
-            hash.spot.value.save()
-          );
-
-          return Ember.RSVP.allSettled(promises);
+          return this._endGame(this.get("model"));
+        }.bind(this))
+        .then(function () {
+          return this._movePieceTo(pieceToMove, spot);
         })
         .then(function () {
-          this.set("pieceToMove", null);
-        }.bind(this))
-        .catch(function (/*err*/) {
-          // debugger;
+          this._unselectAllPieces();
         });
     }
+  },
+
+  _unselectAllPieces: function () {
+    this.get("model.allPieces").map(function (item) { item.set("selected", false); });
+  },
+  _capturePieceAndPassItToPartner: function (player, pieceToTake) {
+    return Ember.RSVP.allSettled([player.get("opponent"), player.get("partner")])
+      .then(function (players) {
+        var opponent = players[0].value,
+            partner = players[1].value;
+
+        pieceToTake.setProperties({
+          player: partner,
+          spot: undefined
+        });
+
+        return Ember.RSVP.allSettled([opponent.save(), partner.save(), pieceToTake.save()]);
+      })
+      .then(function (all) {
+        return all[2].value;
+      });
+  },
+  _endGame: function (game) {
+    game.set("isOver", true);
+    return game.save();
+  },
+  _movePieceTo: function (piece, spot) {
+    piece.set("spot", spot);
+    return Ember.RSVP.allSettled([piece.save(), spot.save()]);
   }
 });
