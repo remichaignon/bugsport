@@ -6,6 +6,8 @@ moduleForModel("board", "Unit | Model | board", {
 });
 
 test("it exists", function (assert) {
+  assert.expect(1);
+
   var model = this.subject();
   assert.ok(!!model);
 });

@@ -3,6 +3,8 @@ import { moduleFor, test } from "ember-qunit";
 moduleFor("controller:game");
 
 test("it exists", function (assert) {
+  assert.expect(1);
+
   var controller = this.subject();
   assert.ok(controller);
 });

@@ -16,10 +16,10 @@ export default DS.Model.extend({
 
   allPieces: function () {
     return [].concat(
-      this.get("boardA.playerBlack.pieces"),
-      this.get("boardA.playerWhite.pieces"),
-      this.get("boardB.playerBlack.pieces"),
-      this.get("boardB.playerWhite.pieces")
+      (this.get("boardA.playerBlack.pieces") || []).toArray(),
+      (this.get("boardA.playerWhite.pieces") || []).toArray(),
+      (this.get("boardB.playerBlack.pieces") || []).toArray(),
+      (this.get("boardB.playerWhite.pieces") || []).toArray()
     );
-  }.property("boards.@each.players.@each.pieces")
+  }.property("boardA.playerBlack.pieces.@each.type", "boardA.playerWhite.pieces.@each.type", "boardB.playerBlack.pieces.@each.type", "boardB.playerWhite.pieces.@each.type")
 });

@@ -1,6 +1,8 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
+  ignoreSpotSelection: false,
+
   selectedPiece: function () {
     return (this.get("model.allPieces") || []).findBy("selected", true);
   }.property("model.allPieces.@each.selected"),
@@ -12,8 +14,16 @@ export default Ember.Controller.extend({
       if (piece.get("player.user.id") !== this.session.get("user.id")) { return; } // Piece does not belong to logged in user
 
       piece.set("selected", true);
+      // HACK
+      this.set("ignoreSpotSelection", true);
     },
     selectSpot: function (spot) {
+      // HACK
+      if (this.get("ignoreSpotSelection")) {
+        this.set("ignoreSpotSelection", false);
+        return;
+      }
+
       var pieceToMove = this.get("selectedPiece");
 
       if (this.get("model.isOver")) { return; } // Game is over
@@ -34,26 +44,26 @@ export default Ember.Controller.extend({
         .then(function (pieceToTake) {
           if (!pieceToTake) { return Ember.RSVP.resolve(); }
 
-          return this._capturePieceAndPassItToPartner(pieceToMove.get("player"), pieceToTake);
+          return this._capturePieceAndPassItToPartner(pieceToTake, pieceToMove.get("player"));
         }.bind(this))
         .then(function (pieceToTake) {
-          if (pieceToTake && (pieceToTake.get("type") !== "king")) { return Ember.RSVP.resolve(); }
+          if (pieceToTake && (pieceToTake.get("type") === "king")) { return this._endGame(this.get("model")); }
 
-          return this._endGame(this.get("model"));
+          return Ember.RSVP.resolve();
         }.bind(this))
         .then(function () {
           return this._movePieceTo(pieceToMove, spot);
-        })
+        }.bind(this))
         .then(function () {
           this._unselectAllPieces();
-        });
+        }.bind(this));
     }
   },
 
   _unselectAllPieces: function () {
     this.get("model.allPieces").map(function (item) { item.set("selected", false); });
   },
-  _capturePieceAndPassItToPartner: function (player, pieceToTake) {
+  _capturePieceAndPassItToPartner: function (pieceToTake, player) {
     return Ember.RSVP.allSettled([player.get("opponent"), player.get("partner")])
       .then(function (players) {
         var opponent = players[0].value,

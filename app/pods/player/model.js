@@ -7,7 +7,7 @@ export default DS.Model.extend({
 
   user: DS.belongsTo("user", { async: true }),
 
-  isBlack: false,
+  isBlack: DS.attr("boolean", { defaultValue: false }),
   isWhite: Ember.computed.not("isBlack"),
 
   opponent: function () {

@@ -87,3 +87,7 @@
 .l-box {
   padding: 1em;
 }
+
+.selected {
+  color: blue;
+}

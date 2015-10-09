@@ -6,6 +6,8 @@ moduleForModel("game", "Unit | Model | game", {
 });
 
 test("it exists", function (assert) {
+  assert.expect(1);
+
   var model = this.subject();
   assert.ok(!!model);
 });
@@ -61,7 +63,7 @@ test("board B", function (assert) {
 });
 
 test("all pieces", function (assert) {
-  assert.expect(0);
+  assert.expect(1);
 
   // TODO
   var model = this.subject(),
@@ -70,23 +72,25 @@ test("all pieces", function (assert) {
   //assert.equal(model.get("allPieces.length"), 0, "No pieces.");
 
   Ember.run(function () {
-    var rook = store.createRecord("piece", { type: "rook" });
-    var knight = store.createRecord("piece", { type: "knight" });
-    var bishop = store.createRecord("piece", { type: "bishop" });
-    var queen = store.createRecord("piece", { type: "queen" });
-    var playerBlackBoardA = store.createRecord("player", { isBlack: true });
-    var playerWhiteBoardA = store.createRecord("player", { isBlack: false });
-    var playerBlackBoardB = store.createRecord("player", { isBlack: true });
-    var playerWhiteBoardB = store.createRecord("player", { isBlack: false });
-    playerBlackBoardB.get("pieces").addObject(rook);
-    playerWhiteBoardB.get("pieces").addObject(knight);
-    playerBlackBoardA.get("pieces").addObject(bishop);
-    playerWhiteBoardA.get("pieces").addObject(queen);
-    var boardA = store.createRecord("board", { name: "A" });
-    boardA.get("players").addObjects([playerBlackBoardA, playerWhiteBoardA]);
-    var boardB = store.createRecord("board", { name: "B" });
-    boardB.get("players").addObjects([playerBlackBoardB, playerWhiteBoardB]);
-    model.get("boards").addObjects([boardA, boardB]);
+    var boardA = store.createRecord("board", { name: "A", game: model });
+    var boardB = store.createRecord("board", { name: "B", game: model });
+    model.get("boards").pushObjects([boardA, boardB]);
+
+    var playerBlackBoardA = store.createRecord("player", { isBlack: true, board: boardA });
+    var playerWhiteBoardA = store.createRecord("player", { isBlack: false, board: boardA });
+    boardA.get("players").pushObjects([playerBlackBoardA, playerWhiteBoardA]);
+    var playerBlackBoardB = store.createRecord("player", { isBlack: true, board: boardB });
+    var playerWhiteBoardB = store.createRecord("player", { isBlack: false, board: boardB });
+    boardB.get("players").pushObjects([playerBlackBoardB, playerWhiteBoardB]);
+
+    var rook = store.createRecord("piece", { type: "rook", player: playerBlackBoardA });
+    playerBlackBoardA.get("pieces").pushObject(rook);
+    var knight = store.createRecord("piece", { type: "knight", player: playerWhiteBoardA });
+    playerWhiteBoardA.get("pieces").pushObject(knight);
+    var bishop = store.createRecord("piece", { type: "bishop", player: playerBlackBoardB });
+    playerBlackBoardB.get("pieces").pushObject(bishop);
+    var queen = store.createRecord("piece", { type: "queen", player: playerWhiteBoardB });
+    playerWhiteBoardB.get("pieces").pushObject(queen);
   });
-  assert.deepEqual(model.get("allPieces").mapBy("type"), ["rook", "knight", "bishop", "queen"], "All pieces present and in correct order.");
+  assert.equal(model.get("allPieces").mapBy("type").join(","), "rook,knight,bishop,queen", "All pieces present and in correct order.");
 });

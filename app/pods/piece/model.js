@@ -18,6 +18,8 @@ export default DS.Model.extend({
   isBlack: Ember.computed.alias("player.isBlack"),
   isWhite: Ember.computed.alias("player.isWhite"),
 
+  selected: false,
+
   canGoTo: function (spot) {
     if (this.get("spot.id")) {
       return this.canMoveTo(spot);
