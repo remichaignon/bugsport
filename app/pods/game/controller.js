@@ -1,8 +1,6 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  ignoreSpotSelection: false,
-
   selectedPiece: function () {
     return (this.get("model.allPieces") || []).findBy("selected", true);
   }.property("model.allPieces.@each.selected"),
@@ -10,30 +8,22 @@ export default Ember.Controller.extend({
   actions: {
     selectPiece: function (piece) {
       if (this.get("model.isOver")) { return; } // Game is over
-      if (this.get("selectedPiece")) { return; } // A piece has already been selected
       if (piece.get("player.user.id") !== this.session.get("user.id")) { return; } // Piece does not belong to logged in user
+      if (this.get("selectedPiece")) {
+        if (this.get("selectedPiece.id") === piece.get("id")) { this._unselectAllPieces(); } // This piece is already selected (cancel move)
+
+        return;  // A piece has already been selected
+      }
 
       piece.set("selected", true);
-      // HACK
-      this.set("ignoreSpotSelection", true);
     },
     selectSpot: function (spot) {
-      // HACK
-      if (this.get("ignoreSpotSelection")) {
-        this.set("ignoreSpotSelection", false);
-        return;
-      }
+      if (this.get("model.isOver")) { return; } // Game is over
 
       var pieceToMove = this.get("selectedPiece");
 
-      if (this.get("model.isOver")) { return; } // Game is over
       if (!pieceToMove) { return; } // No piece has been selected
-
-       // The selected piece is on the selected spot (cancel move)
-      if (pieceToMove.get("spot.id") === spot.get("id")) {
-        this._unselectAllPieces();
-        return;
-      }
+      if (pieceToMove.get("spot.id") === spot.get("id")) { return; } // The selected piece is already on the selected spot
 
       if (!pieceToMove.canGoTo(spot.get("id"))) {
         // TODO: Show message
