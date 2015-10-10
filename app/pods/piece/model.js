@@ -27,12 +27,26 @@ export default DS.Model.extend({
 
     return this.canDropTo(spot);
   },
-  canMoveTo: function (/*spot*/) {
-    // TODO
-    return true;
+  canMoveTo: function (spot) {
+    var method = "_canMove" + this.get("type").capitalize() + "To";
+    return this[method](spot);
   },
-  canDropTo: function (/*spot*/) {
-    // TODO
-    return true;
-  }
+  canDropTo: function (spot) {
+    var method = "_canDrop" + this.get("type").capitalize() + "To";
+    return this[method](spot);
+  },
+
+  _canMovePawnTo: function (spot) { return !!spot; },
+  _canMoveRookTo: function (spot) { return !!spot; },
+  _canMoveKnightTo: function (spot) { return !!spot; },
+  _canMoveBishopTo: function (spot) { return !!spot; },
+  _canMoveQueenTo: function (spot) { return !!spot; },
+  _canMoveKingTo: function (spot) { return !!spot; },
+
+  _canDropPawnTo: function (spot) { return !!spot; },
+  _canDropRookTo: function (spot) { return !!spot; },
+  _canDropKnightTo: function (spot) { return !!spot; },
+  _canDropBishopTo: function (spot) { return !!spot; },
+  _canDropQueenTo: function (spot) { return !!spot; },
+  _canDropKingTo: function (spot) { return !!spot; }
 });

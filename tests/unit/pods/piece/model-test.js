@@ -148,3 +148,108 @@ test("color", function (assert) {
   assert.ok(!model.get("isBlack"), "Not black when player is set to not black.");
   assert.ok(model.get("isWhite"), "White when player is set to not black.");
 });
+
+test("can go to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can move to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can drop to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can move pawn to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can move rook to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can move knight to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can move bishop to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can move queen to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can move king to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can drop pawn to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can drop rook to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can drop knight to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can drop bishop to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can drop queen to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
+
+test("can drop king to", function (assert) {
+  assert.expect(0);
+
+  // TODO
+  var model = this.subject();
+});
