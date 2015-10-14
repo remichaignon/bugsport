@@ -63,34 +63,56 @@ test("board B", function (assert) {
 });
 
 test("all pieces", function (assert) {
-  assert.expect(1);
+  assert.expect(10);
 
-  // TODO
   var model = this.subject(),
-      store = this.store();
+      store = this.store(),
+      playerBlackBoardA,
+      playerWhiteBoardA,
+      playerBlackBoardB,
+      playerWhiteBoardB;
 
-  //assert.equal(model.get("allPieces.length"), 0, "No pieces.");
+  assert.equal(model.get("allPieces.length"), 0, "No pieces.");
 
   Ember.run(function () {
     var boardA = store.createRecord("board", { name: "A", game: model });
     var boardB = store.createRecord("board", { name: "B", game: model });
     model.get("boards").pushObjects([boardA, boardB]);
 
-    var playerBlackBoardA = store.createRecord("player", { isBlack: true, board: boardA });
-    var playerWhiteBoardA = store.createRecord("player", { isBlack: false, board: boardA });
+    playerBlackBoardA = store.createRecord("player", { isBlack: true, board: boardA });
+    playerWhiteBoardA = store.createRecord("player", { isBlack: false, board: boardA });
     boardA.get("players").pushObjects([playerBlackBoardA, playerWhiteBoardA]);
-    var playerBlackBoardB = store.createRecord("player", { isBlack: true, board: boardB });
-    var playerWhiteBoardB = store.createRecord("player", { isBlack: false, board: boardB });
+    playerBlackBoardB = store.createRecord("player", { isBlack: true, board: boardB });
+    playerWhiteBoardB = store.createRecord("player", { isBlack: false, board: boardB });
     boardB.get("players").pushObjects([playerBlackBoardB, playerWhiteBoardB]);
+  });
+  assert.equal(model.get("allPieces.length"), 0, "Still no pieces.");
 
+  Ember.run(function () {
     var rook = store.createRecord("piece", { type: "rook", player: playerBlackBoardA });
     playerBlackBoardA.get("pieces").pushObject(rook);
-    var knight = store.createRecord("piece", { type: "knight", player: playerWhiteBoardA });
-    playerWhiteBoardA.get("pieces").pushObject(knight);
+  });
+  assert.equal(model.get("allPieces.length"), 1, "One piece.");
+  assert.deepEqual(model.get("allPieces").mapBy("type"), ["rook"], "All one piece present and in correct order.");
+
+  Ember.run(function () {
     var bishop = store.createRecord("piece", { type: "bishop", player: playerBlackBoardB });
     playerBlackBoardB.get("pieces").pushObject(bishop);
+  });
+  assert.equal(model.get("allPieces.length"), 2, "Two pieces.");
+  assert.deepEqual(model.get("allPieces").mapBy("type"), ["rook", "bishop"], "All two pieces present and in correct order.");
+
+  Ember.run(function () {
+    var knight = store.createRecord("piece", { type: "knight", player: playerWhiteBoardA });
+    playerWhiteBoardA.get("pieces").pushObject(knight);
+  });
+  assert.equal(model.get("allPieces.length"), 3, "Three pieces.");
+  assert.deepEqual(model.get("allPieces").mapBy("type"), ["rook", "knight", "bishop"], "All three pieces present and in correct order.");
+
+  Ember.run(function () {
     var queen = store.createRecord("piece", { type: "queen", player: playerWhiteBoardB });
     playerWhiteBoardB.get("pieces").pushObject(queen);
   });
-  assert.equal(model.get("allPieces").mapBy("type").join(","), "rook,knight,bishop,queen", "All pieces present and in correct order.");
+  assert.equal(model.get("allPieces.length"), 4, "Four pieces.");
+  assert.deepEqual(model.get("allPieces").mapBy("type"), ["rook", "knight", "bishop", "queen"], "All four pieces present and in correct order.");
 });

@@ -9,11 +9,8 @@ export default Ember.Controller.extend({
     selectPiece: function (piece) {
       if (this.get("model.isOver")) { return; } // Game is over
       if (piece.get("player.user.id") !== this.session.get("user.id")) { return; } // Piece does not belong to logged in user
-      if (this.get("selectedPiece")) {
-        if (this.get("selectedPiece.id") === piece.get("id")) { this._unselectAllPieces(); } // This piece is already selected (cancel move)
-
-        return;  // A piece has already been selected
-      }
+      if (this.get("selectedPiece.id") === piece.get("id")) { return this._unselectAllPieces(); } // This piece is already selected (cancel move)
+      if (this.get("selectedPiece")) { return; } // A piece has already been selected
 
       piece.set("selected", true);
     },
@@ -32,14 +29,10 @@ export default Ember.Controller.extend({
 
       spot.get("piece")
         .then(function (pieceToTake) {
-          if (!pieceToTake) { return Ember.RSVP.resolve(); }
-
-          return this._capturePieceAndPassItToPartner(pieceToTake, pieceToMove.get("player"));
+          if (pieceToTake) { return this._capturePieceAndPassItToPartner(pieceToTake, pieceToMove.get("player")); }
         }.bind(this))
         .then(function (pieceToTake) {
           if (pieceToTake && (pieceToTake.get("type") === "king")) { return this._endGame(this.get("model")); }
-
-          return Ember.RSVP.resolve();
         }.bind(this))
         .then(function () {
           return this._movePieceTo(pieceToMove, spot);
