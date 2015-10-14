@@ -150,24 +150,239 @@ test("color", function (assert) {
 });
 
 test("can go to", function (assert) {
-  assert.expect(0);
+  assert.expect(2);
 
-  // TODO
-  var model = this.subject();
+  var model = this.subject(),
+      store = this.store(),
+      spotFrom,
+      spotTo;
+
+  Ember.run(function () {
+    spotTo = store.createRecord("spot");
+
+    model.setProperties({
+      canMoveTo: function () { assert.ok(false, "`canMoveTo` should not be called."); },
+      canDropTo: function () { assert.ok(true, "`canDropTo` called when the piece is not on a spot."); },
+    });
+  });
+  model.canGoTo(spotTo);
+
+  Ember.run(function () {
+    spotFrom = store.createRecord("spot");
+
+    model.setProperties({
+      spot: spotFrom,
+      canMoveTo: function () { assert.ok(true, "`canMoveTo` called when the piece is on a spot."); },
+      canDropTo: function () { assert.ok(false, "`canDropTo` should not be called."); },
+    });
+  });
+  model.canGoTo(spotTo);
 });
 
 test("can move to", function (assert) {
-  assert.expect(0);
+  assert.expect(6);
 
-  // TODO
-  var model = this.subject();
+  var model = this.subject(),
+      store = this.store(),
+      spotFrom,
+      spotTo;
+
+  Ember.run(function () {
+    spotTo = store.createRecord("spot");
+    spotFrom = store.createRecord("spot");
+
+    model.setProperties({
+      spot: spotTo,
+      _canMovePawnTo: function () { assert.ok(false, "`_canMovePawnTo` should not be called."); },
+      _canMoveRookTo: function () { assert.ok(false, "`_canMoveRookTo` should not be called."); },
+      _canMoveKnightTo: function () { assert.ok(false, "`_canMoveKnightTo` should not be called."); },
+      _canMoveBishopTo: function () { assert.ok(false, "`_canMoveBishopTo` should not be called."); },
+      _canMoveQueenTo: function () { assert.ok(false, "`_canMoveQueenTo` should not be called."); },
+      _canMoveKingTo: function () { assert.ok(false, "`_canMoveKingTo` should not be called."); },
+    });
+  });
+  model.canMoveTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "pawn",
+      _canMovePawnTo: function () { assert.ok(true, "`_canMovePawnTo` called."); },
+      _canMoveRookTo: function () { assert.ok(false, "`_canMoveRookTo` should not be called."); },
+      _canMoveKnightTo: function () { assert.ok(false, "`_canMoveKnightTo` should not be called."); },
+      _canMoveBishopTo: function () { assert.ok(false, "`_canMoveBishopTo` should not be called."); },
+      _canMoveQueenTo: function () { assert.ok(false, "`_canMoveQueenTo` should not be called."); },
+      _canMoveKingTo: function () { assert.ok(false, "`_canMoveKingTo` should not be called."); },
+    });
+  });
+  model.canMoveTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "rook",
+      _canMovePawnTo: function () { assert.ok(false, "`_canMovePawnTo` should not be called."); },
+      _canMoveRookTo: function () { assert.ok(true, "`_canMoveRookTo` called."); },
+      _canMoveKnightTo: function () { assert.ok(false, "`_canMoveKnightTo` should not be called."); },
+      _canMoveBishopTo: function () { assert.ok(false, "`_canMoveBishopTo` should not be called."); },
+      _canMoveQueenTo: function () { assert.ok(false, "`_canMoveQueenTo` should not be called."); },
+      _canMoveKingTo: function () { assert.ok(false, "`_canMoveKingTo` should not be called."); },
+    });
+  });
+  model.canMoveTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "knight",
+      _canMovePawnTo: function () { assert.ok(false, "`_canMovePawnTo` should not be called."); },
+      _canMoveRookTo: function () { assert.ok(false, "`_canMoveRookTo` should not be called."); },
+      _canMoveKnightTo: function () { assert.ok(true, "`_canMoveKnightTo` called."); },
+      _canMoveBishopTo: function () { assert.ok(false, "`_canMoveBishopTo` should not be called."); },
+      _canMoveQueenTo: function () { assert.ok(false, "`_canMoveQueenTo` should not be called."); },
+      _canMoveKingTo: function () { assert.ok(false, "`_canMoveKingTo` should not be called."); },
+    });
+  });
+  model.canMoveTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "bishop",
+      _canMovePawnTo: function () { assert.ok(false, "`_canMovePawnTo` should not be called."); },
+      _canMoveRookTo: function () { assert.ok(false, "`_canMoveRookTo` should not be called."); },
+      _canMoveKnightTo: function () { assert.ok(false, "`_canMoveKnightTo` should not be called."); },
+      _canMoveBishopTo: function () { assert.ok(true, "`_canMoveBishopTo` called."); },
+      _canMoveQueenTo: function () { assert.ok(false, "`_canMoveQueenTo` should not be called."); },
+      _canMoveKingTo: function () { assert.ok(false, "`_canMoveKingTo` should not be called."); },
+    });
+  });
+  model.canMoveTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "queen",
+      _canMovePawnTo: function () { assert.ok(false, "`_canMovePawnTo` should not be called."); },
+      _canMoveRookTo: function () { assert.ok(false, "`_canMoveRookTo` should not be called."); },
+      _canMoveKnightTo: function () { assert.ok(false, "`_canMoveKnightTo` should not be called."); },
+      _canMoveBishopTo: function () { assert.ok(false, "`_canMoveBishopTo` should not be called."); },
+      _canMoveQueenTo: function () { assert.ok(true, "`_canMoveQueenTo` called."); },
+      _canMoveKingTo: function () { assert.ok(false, "`_canMoveKingTo` should not be called."); },
+    });
+  });
+  model.canMoveTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "king",
+      _canMovePawnTo: function () { assert.ok(false, "`_canMovePawnTo` should not be called."); },
+      _canMoveRookTo: function () { assert.ok(false, "`_canMoveRookTo` should not be called."); },
+      _canMoveKnightTo: function () { assert.ok(false, "`_canMoveKnightTo` should not be called."); },
+      _canMoveBishopTo: function () { assert.ok(false, "`_canMoveBishopTo` should not be called."); },
+      _canMoveQueenTo: function () { assert.ok(false, "`_canMoveQueenTo` should not be called."); },
+      _canMoveKingTo: function () { assert.ok(true, "`_canMoveKingTo` called."); },
+    });
+  });
+  model.canMoveTo(spotTo);
 });
 
 test("can drop to", function (assert) {
-  assert.expect(0);
+  assert.expect(6);
 
-  // TODO
-  var model = this.subject();
+  var model = this.subject(),
+      store = this.store(),
+      spotFrom,
+      spotTo;
+
+  Ember.run(function () {
+    spotTo = store.createRecord("spot");
+    spotFrom = store.createRecord("spot");
+
+    model.setProperties({
+      spot: spotTo,
+      _canDropPawnTo: function () { assert.ok(false, "`_canDropPawnTo` should not be called."); },
+      _canDropRookTo: function () { assert.ok(false, "`_canDropRookTo` should not be called."); },
+      _canDropKnightTo: function () { assert.ok(false, "`_canDropKnightTo` should not be called."); },
+      _canDropBishopTo: function () { assert.ok(false, "`_canDropBishopTo` should not be called."); },
+      _canDropQueenTo: function () { assert.ok(false, "`_canDropQueenTo` should not be called."); },
+      _canDropKingTo: function () { assert.ok(false, "`_canDropKingTo` should not be called."); },
+    });
+  });
+  model.canDropTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "pawn",
+      _canDropPawnTo: function () { assert.ok(true, "`_canDropPawnTo` called."); },
+      _canDropRookTo: function () { assert.ok(false, "`_canDropRookTo` should not be called."); },
+      _canDropKnightTo: function () { assert.ok(false, "`_canDropKnightTo` should not be called."); },
+      _canDropBishopTo: function () { assert.ok(false, "`_canDropBishopTo` should not be called."); },
+      _canDropQueenTo: function () { assert.ok(false, "`_canDropQueenTo` should not be called."); },
+      _canDropKingTo: function () { assert.ok(false, "`_canDropKingTo` should not be called."); },
+    });
+  });
+  model.canDropTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "rook",
+      _canDropPawnTo: function () { assert.ok(false, "`_canDropPawnTo` should not be called."); },
+      _canDropRookTo: function () { assert.ok(true, "`_canDropRookTo` called."); },
+      _canDropKnightTo: function () { assert.ok(false, "`_canDropKnightTo` should not be called."); },
+      _canDropBishopTo: function () { assert.ok(false, "`_canDropBishopTo` should not be called."); },
+      _canDropQueenTo: function () { assert.ok(false, "`_canDropQueenTo` should not be called."); },
+      _canDropKingTo: function () { assert.ok(false, "`_canDropKingTo` should not be called."); },
+    });
+  });
+  model.canDropTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "knight",
+      _canDropPawnTo: function () { assert.ok(false, "`_canDropPawnTo` should not be called."); },
+      _canDropRookTo: function () { assert.ok(false, "`_canDropRookTo` should not be called."); },
+      _canDropKnightTo: function () { assert.ok(true, "`_canDropKnightTo` called."); },
+      _canDropBishopTo: function () { assert.ok(false, "`_canDropBishopTo` should not be called."); },
+      _canDropQueenTo: function () { assert.ok(false, "`_canDropQueenTo` should not be called."); },
+      _canDropKingTo: function () { assert.ok(false, "`_canDropKingTo` should not be called."); },
+    });
+  });
+  model.canDropTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "bishop",
+      _canDropPawnTo: function () { assert.ok(false, "`_canDropPawnTo` should not be called."); },
+      _canDropRookTo: function () { assert.ok(false, "`_canDropRookTo` should not be called."); },
+      _canDropKnightTo: function () { assert.ok(false, "`_canDropKnightTo` should not be called."); },
+      _canDropBishopTo: function () { assert.ok(true, "`_canDropBishopTo` called."); },
+      _canDropQueenTo: function () { assert.ok(false, "`_canDropQueenTo` should not be called."); },
+      _canDropKingTo: function () { assert.ok(false, "`_canDropKingTo` should not be called."); },
+    });
+  });
+  model.canDropTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "queen",
+      _canDropPawnTo: function () { assert.ok(false, "`_canDropPawnTo` should not be called."); },
+      _canDropRookTo: function () { assert.ok(false, "`_canDropRookTo` should not be called."); },
+      _canDropKnightTo: function () { assert.ok(false, "`_canDropKnightTo` should not be called."); },
+      _canDropBishopTo: function () { assert.ok(false, "`_canDropBishopTo` should not be called."); },
+      _canDropQueenTo: function () { assert.ok(true, "`_canDropQueenTo` called."); },
+      _canDropKingTo: function () { assert.ok(false, "`_canDropKingTo` should not be called."); },
+    });
+  });
+  model.canDropTo(spotTo);
+
+  Ember.run(function () {
+    model.setProperties({
+      type: "king",
+      _canDropPawnTo: function () { assert.ok(false, "`_canDropPawnTo` should not be called."); },
+      _canDropRookTo: function () { assert.ok(false, "`_canDropRookTo` should not be called."); },
+      _canDropKnightTo: function () { assert.ok(false, "`_canDropKnightTo` should not be called."); },
+      _canDropBishopTo: function () { assert.ok(false, "`_canDropBishopTo` should not be called."); },
+      _canDropQueenTo: function () { assert.ok(false, "`_canDropQueenTo` should not be called."); },
+      _canDropKingTo: function () { assert.ok(true, "`_canDropKingTo` called."); },
+    });
+  });
+  model.canDropTo(spotTo);
 });
 
 test("can move pawn to", function (assert) {

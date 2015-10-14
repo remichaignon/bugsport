@@ -28,10 +28,14 @@ export default DS.Model.extend({
     return this.canDropTo(spot);
   },
   canMoveTo: function (spot) {
+    if (!this.get("type")) { return false; }
+
     var method = "_canMove" + this.get("type").capitalize() + "To";
     return this[method](spot);
   },
   canDropTo: function (spot) {
+    if (!this.get("type")) { return false; }
+
     var method = "_canDrop" + this.get("type").capitalize() + "To";
     return this[method](spot);
   },
