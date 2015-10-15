@@ -52,14 +52,16 @@ test("capture piece and pass it to partner", function (assert) {
 });
 
 test("end game", function (assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   var controller = this.subject(),
       store = controller.store,
       game;
 
   Ember.run(function () {
-    game = store.createRecord("game", { save: function () { return; } });
+    game = store.createRecord("game", {
+      save: function () { assert.ok(true, "Game has been saved."); }
+    });
   });
   assert.ok(!game.get("isOver"), "Game is still on.");
 
