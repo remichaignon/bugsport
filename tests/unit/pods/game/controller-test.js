@@ -1,6 +1,9 @@
+import Ember from "ember";
 import { moduleFor, test } from "ember-qunit";
 
-moduleFor("controller:game");
+moduleFor("controller:game", {
+  needs: ["model:board", "model:game"]
+});
 
 test("it exists", function (assert) {
   assert.expect(1);
@@ -10,10 +13,13 @@ test("it exists", function (assert) {
 });
 
 test("selected piece", function (assert) {
-  assert.expect(0);
+  assert.expect(1);
 
   // TODO
   var controller = this.subject();
+  assert.ok(!controller.get("selectedPiece"), "No selected piece by default.");
+
+  // ...
 });
 
 test("select piece", function (assert) {
@@ -46,10 +52,19 @@ test("capture piece and pass it to partner", function (assert) {
 });
 
 test("end game", function (assert) {
-  assert.expect(0);
+  assert.expect(2);
 
-  // TODO
-  var controller = this.subject();
+  var controller = this.subject(),
+      store = controller.store,
+      game;
+
+  Ember.run(function () {
+    game = store.createRecord("game", { save: function () { return; } });
+  });
+  assert.ok(!game.get("isOver"), "Game is still on.");
+
+  Ember.run(function () { controller._endGame(game); });
+  assert.ok(game.get("isOver"), "Game is over.");
 });
 
 test("move piece to", function (assert) {
