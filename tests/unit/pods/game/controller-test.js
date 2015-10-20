@@ -36,7 +36,6 @@ test("select move", function (assert) {
   var controller = this.subject();
 });
 
-
 test("unselect all pieces", function (assert) {
   assert.expect(0);
 
@@ -49,24 +48,6 @@ test("capture piece and pass it to partner", function (assert) {
 
   // TODO
   var controller = this.subject();
-});
-
-test("end game", function (assert) {
-  assert.expect(3);
-
-  var controller = this.subject(),
-      store = controller.store,
-      game;
-
-  Ember.run(function () {
-    game = store.createRecord("game", {
-      save: function () { assert.ok(true, "Game has been saved."); }
-    });
-  });
-  assert.ok(!game.get("isOver"), "Game is still on.");
-
-  Ember.run(function () { controller._endGame(game); });
-  assert.ok(game.get("isOver"), "Game is over.");
 });
 
 test("move piece to", function (assert) {

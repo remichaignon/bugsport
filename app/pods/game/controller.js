@@ -32,13 +32,14 @@ export default Ember.Controller.extend({
           if (pieceToTake) { return this._capturePieceAndPassItToPartner(pieceToTake, pieceToMove.get("player")); }
         }.bind(this))
         .then(function (pieceToTake) {
-          if (pieceToTake && (pieceToTake.get("type") === "king")) { return this._endGame(this.get("model")); }
+          if (pieceToTake && (pieceToTake.get("type") === "king")) { return this.get("model").end(); }
         }.bind(this))
         .then(function () {
           return this._movePieceTo(pieceToMove, spot);
         }.bind(this))
         .then(function () {
           this._unselectAllPieces();
+          return this.get("model").switchTurn();
         }.bind(this));
     }
   },
@@ -62,10 +63,6 @@ export default Ember.Controller.extend({
       .then(function (all) {
         return all[2].value;
       });
-  },
-  _endGame: function (game) {
-    game.set("isOver", true);
-    return game.save();
   },
   _movePieceTo: function (piece, spot) {
     piece.set("spot", spot);
