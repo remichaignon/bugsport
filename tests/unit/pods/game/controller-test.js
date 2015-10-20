@@ -13,13 +13,39 @@ test("it exists", function (assert) {
 });
 
 test("selected piece", function (assert) {
-  assert.expect(1);
+  assert.expect(4);
 
-  // TODO
-  var controller = this.subject();
+  var controller = this.subject(),
+      store = controller.store,
+      rook,
+      knight,
+      bishop,
+      queen;
   assert.ok(!controller.get("selectedPiece"), "No selected piece by default.");
 
-  // ...
+  Ember.run(function () {
+    var game = store.createRecord("game");
+    controller.set("model", game);
+
+    var boardA = store.createRecord("board", { name: "A", game: game });
+    var boardB = store.createRecord("board", { name: "B", game: game });
+
+    var playerBlackBoardA = store.createRecord("player", { isBlack: true, board: boardA });
+    var playerWhiteBoardA = store.createRecord("player", { isBlack: false, board: boardA });
+
+    var playerBlackBoardB = store.createRecord("player", { isBlack: true, board: boardB });
+    var playerWhiteBoardB = store.createRecord("player", { isBlack: false, board: boardB });
+
+    rook = store.createRecord("piece", { type: "rook", player: playerBlackBoardA });
+    bishop = store.createRecord("piece", { type: "bishop", player: playerBlackBoardB });
+    knight = store.createRecord("piece", { type: "knight", player: playerWhiteBoardA });
+    queen = store.createRecord("piece", { type: "queen", player: playerWhiteBoardB });
+  });
+  assert.ok(!controller.get("selectedPiece"), "No selected piece still.");
+
+  Ember.run(function () { queen.set("selected", true); });
+  assert.ok(controller.get("selectedPiece"), "A piece has been selected.");
+  assert.equal(controller.get("selectedPiece.type"), "queen", "The selected piece is the queen.");
 });
 
 test("select piece", function (assert) {
@@ -37,10 +63,42 @@ test("select move", function (assert) {
 });
 
 test("unselect all pieces", function (assert) {
-  assert.expect(0);
+  assert.expect(5);
 
-  // TODO
-  var controller = this.subject();
+  var controller = this.subject(),
+      store = controller.store,
+      rook,
+      knight,
+      bishop,
+      queen;
+  assert.ok(!controller.get("selectedPiece"), "No selected piece by default.");
+
+  Ember.run(function () {
+    var game = store.createRecord("game");
+    controller.set("model", game);
+
+    var boardA = store.createRecord("board", { name: "A", game: game });
+    var boardB = store.createRecord("board", { name: "B", game: game });
+
+    var playerBlackBoardA = store.createRecord("player", { isBlack: true, board: boardA });
+    var playerWhiteBoardA = store.createRecord("player", { isBlack: false, board: boardA });
+
+    var playerBlackBoardB = store.createRecord("player", { isBlack: true, board: boardB });
+    var playerWhiteBoardB = store.createRecord("player", { isBlack: false, board: boardB });
+
+    rook = store.createRecord("piece", { type: "rook", player: playerBlackBoardA });
+    bishop = store.createRecord("piece", { type: "bishop", player: playerBlackBoardB });
+    knight = store.createRecord("piece", { type: "knight", player: playerWhiteBoardA });
+    queen = store.createRecord("piece", { type: "queen", player: playerWhiteBoardB });
+  });
+  assert.ok(!controller.get("selectedPiece"), "No selected piece still.");
+
+  Ember.run(function () { queen.set("selected", true); });
+  assert.ok(controller.get("selectedPiece"), "A piece has been selected.");
+  assert.equal(controller.get("selectedPiece.type"), "queen", "The selected piece is the queen.");
+
+  Ember.run(function () { controller._unselectAllPieces(); });
+  assert.ok(!controller.get("selectedPiece"), "No selected piece anymore.");
 });
 
 test("capture piece and pass it to partner", function (assert) {
