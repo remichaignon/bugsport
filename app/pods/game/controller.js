@@ -45,7 +45,7 @@ export default Ember.Controller.extend({
   },
 
   _unselectAllPieces: function () {
-    this.get("model.allPieces").map(function (item) { item.set("selected", false); });
+    (this.get("model.allPieces") || []).invoke("set", "selected", false);
   },
   _capturePieceAndPassItToPartner: function (pieceToTake, player) {
     return Ember.RSVP.allSettled([player.get("opponent"), player.get("partner")])
