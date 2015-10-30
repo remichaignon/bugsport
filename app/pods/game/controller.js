@@ -75,6 +75,6 @@ export default Ember.Controller.extend({
 
     return piece.save()
       .then(function () { return spot.get("board.spots"); })
-      .then(function (spots) { return spots.invoke("save"); });
+      .then(function (spots) { return (spots || []).invoke("save"); });
   }
 });

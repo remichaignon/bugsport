@@ -109,7 +109,7 @@ test("capture piece and pass it to partner", function (assert) {
 });
 
 test("move piece to", function (assert) {
-  assert.expect(13);
+  assert.expect(11);
 
   var controller = this.subject(),
       store = controller.store,
@@ -122,14 +122,8 @@ test("move piece to", function (assert) {
       id: "piece",
       save: function () { assert.ok(true, "Piece has been saved."); return Ember.RSVP.resolve(); }
     });
-    spotA = store.createRecord("spot", {
-      id: "spotA",
-      save: function () { assert.ok(true, "Spot A has been saved."); return Ember.RSVP.resolve(); }
-    });
-    spotB = store.createRecord("spot", {
-      id: "spotB",
-      save: function () { assert.ok(true, "Spot B has been saved."); return Ember.RSVP.resolve(); }
-    });
+    spotA = store.createRecord("spot", { id: "spotA" });
+    spotB = store.createRecord("spot", { id: "spotB" });
   });
   assert.ok(!piece.get("spot.id"), "Piece has no spot.");
   assert.ok(!spotA.get("piece.id"), "Spot A has no piece.");
