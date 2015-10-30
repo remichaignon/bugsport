@@ -120,15 +120,15 @@ test("move piece to", function (assert) {
   Ember.run(function () {
     piece = store.createRecord("piece", {
       id: "piece",
-      save: function () { assert.ok(true, "Piece has been saved."); }
+      save: function () { assert.ok(true, "Piece has been saved."); return Ember.RSVP.resolve(); }
     });
     spotA = store.createRecord("spot", {
       id: "spotA",
-      save: function () { assert.ok(true, "Spot A has been saved."); }
+      save: function () { assert.ok(true, "Spot A has been saved."); return Ember.RSVP.resolve(); }
     });
     spotB = store.createRecord("spot", {
       id: "spotB",
-      save: function () { assert.ok(true, "Spot B has been saved."); }
+      save: function () { assert.ok(true, "Spot B has been saved."); return Ember.RSVP.resolve(); }
     });
   });
   assert.ok(!piece.get("spot.id"), "Piece has no spot.");

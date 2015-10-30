@@ -8,6 +8,11 @@ export default Ember.Controller.extend({
   actions: {
     selectPiece: function (piece) {
       if (this.get("model.isOver")) { return; } // Game is over
+
+      var board = piece.get("board") || piece.get("player.board");
+      if (!board.get("playerBlack.user") || !board.get("playerWhite.user")) { return; } // Not enough player on the board to start the game
+      if (board.get("isWhiteTurn") ? this.session.get("user.player.isBlack") : this.session.get("user.player.isWhite")) { return; } // Not the logged in user's turn
+
       if (piece.get("player.user.id") !== this.session.get("user.id")) { return; } // Piece does not belong to logged in user
       if (this.get("selectedPiece.id") === piece.get("id")) { return this._unselectAllPieces(); } // This piece is already selected (cancel move)
       if (this.get("selectedPiece")) { return; } // A piece has already been selected
@@ -39,8 +44,11 @@ export default Ember.Controller.extend({
         }.bind(this))
         .then(function () {
           this._unselectAllPieces();
-          return this.get("model").switchTurn();
-        }.bind(this));
+          return pieceToMove.get("board");
+        }.bind(this))
+        .then(function (board) {
+          board.switchTurn();
+        });
     }
   },
 
@@ -60,12 +68,13 @@ export default Ember.Controller.extend({
 
         return Ember.RSVP.allSettled([opponent.save(), partner.save(), pieceToTake.save()]);
       })
-      .then(function (all) {
-        return all[2].value;
-      });
+      .then(function (all) { return all[2].value; });
   },
   _movePieceTo: function (piece, spot) {
     piece.set("spot", spot);
-    return Ember.RSVP.allSettled([piece.save(), spot.save()]);
+
+    return piece.save()
+      .then(function () { return spot.get("board.spots"); })
+      .then(function (spots) { return spots.invoke("save"); });
   }
 });

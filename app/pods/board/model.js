@@ -6,6 +6,7 @@ export default DS.Model.extend({
   spots: DS.hasMany("spot", { async: true }),
 
   name: DS.attr("string"),
+  isWhiteTurn: DS.attr("boolean", { defaultValue: true }),
 
   otherBoard: function () {
     var name = (this.get("name") === "A") ? "B" : "A";
@@ -18,5 +19,10 @@ export default DS.Model.extend({
   }.property("players.@each.isBlack"),
   playerWhite: function () {
     return this.get("players").findBy("isWhite", true);
-  }.property("players.@each.isWhite")
+  }.property("players.@each.isWhite"),
+
+  switchTurn: function () {
+    this.toggleProperty("isWhiteTurn");
+    return this.save();
+  }
 });

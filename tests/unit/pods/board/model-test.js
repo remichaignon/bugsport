@@ -121,3 +121,18 @@ test("player white", function (assert) {
   });
   assert.equal(model.get("playerWhite"), playerWhite, "Player white is the player we expect when they are the only player.");
 });
+
+test("switch turn", function (assert) {
+  assert.expect(5);
+
+  var model = this.subject({ save: function () {
+    assert.ok(true, "Saved.");
+  } });
+  assert.ok(model.get("isWhiteTurn"), "White turn by default.");
+
+  Ember.run(function () { model.switchTurn(); });
+  assert.ok(!model.get("isWhiteTurn"), "Not white turn.");
+
+  Ember.run(function () { model.switchTurn(); });
+  assert.ok(model.get("isWhiteTurn"), "White turn again.");
+});

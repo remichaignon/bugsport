@@ -110,21 +110,6 @@ test("all pieces", function (assert) {
   assert.deepEqual(model.get("allPieces").mapBy("type"), ["rook", "knight", "bishop", "queen"], "All four pieces present and in correct order.");
 });
 
-test("switch turn", function (assert) {
-  assert.expect(5);
-
-  var model = this.subject({ save: function () {
-    assert.ok(true, "Saved.");
-  } });
-  assert.ok(model.get("isWhiteTurn"), "White turn by default.");
-
-  Ember.run(function () { model.switchTurn(); });
-  assert.ok(!model.get("isWhiteTurn"), "Not white turn.");
-
-  Ember.run(function () { model.switchTurn(); });
-  assert.ok(model.get("isWhiteTurn"), "White turn again.");
-});
-
 test("end", function (assert) {
   assert.expect(3);
 

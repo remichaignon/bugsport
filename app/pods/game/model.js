@@ -11,7 +11,6 @@ export default DS.Model.extend({
   }.property("boards.@each.name"),
 
   createdAt: DS.attr("date"),
-  isWhiteTurn: DS.attr("boolean", { defaultValue: true }),
   isOver: DS.attr("boolean", { defaultValue: false }),
   name: DS.attr("string"),
 
@@ -24,10 +23,6 @@ export default DS.Model.extend({
     );
   }.property("boardA.playerBlack.pieces.@each.type", "boardA.playerWhite.pieces.@each.type", "boardB.playerBlack.pieces.@each.type", "boardB.playerWhite.pieces.@each.type"),
 
-  switchTurn: function () {
-    this.toggleProperty("isWhiteTurn");
-    return this.save();
-  },
   end: function () {
     this.set("isOver", true);
     return this.save();

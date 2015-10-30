@@ -27,17 +27,17 @@ export default Ember.Route.extend({
     return Ember.RSVP.allSettled(
       [].concat(
         game.save(),
-        boards.map(function (board) { return board.save(); }),
+        boards.invoke("save"),
 
-        boardASpots.map(function (spot) { return spot.save(); }),
-        boardAPlayers.map(function (player) { return player.save(); }),
-        boardAPlayerBlackPieces.map(function (piece) { return piece.save(); }),
-        boardAPlayerWhitePieces.map(function (piece) { return piece.save(); }),
+        boardAPlayers.invoke("save"),
+        boardAPlayerBlackPieces.invoke("save"),
+        boardAPlayerWhitePieces.invoke("save"),
+        boardASpots.invoke("save"),
 
-        boardBSpots.map(function (spot) { return spot.save(); }),
-        boardBPlayers.map(function (player) { return player.save(); }),
-        boardBPlayerBlackPieces.map(function (piece) { return piece.save(); }),
-        boardBPlayerWhitePieces.map(function (piece) { return piece.save(); })
+        boardBPlayers.invoke("save"),
+        boardBPlayerBlackPieces.invoke("save"),
+        boardBPlayerWhitePieces.invoke("save"),
+        boardBSpots.invoke("save")
       ))
       .then(function (all) { return all[0].value; });
   },
